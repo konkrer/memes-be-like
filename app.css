@@ -1,0 +1,216 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: radial-gradient(
+                    rgba(10, 10, 200, 0.717),
+                    rgba(179, 48, 8, 0.3)
+                    );
+    text-align: center;
+    padding: 0 5%;
+    font-family: 'BenchNine', sans-serif;
+}
+
+header {
+    font-size: 3em;
+    height: 80vh;
+    font-family: 'Bangers', cursive;
+    perspective: 600px;
+    transition: opacity 2s;
+}
+
+header h1 {
+    transform: rotateX(35deg); 
+    letter-spacing: .1em;
+    text-shadow: 1px 1px 1px red, 
+                 -1px -1px 1px red, 
+                 -1px 1px 1px red, 
+                 1px -1px 1px red,
+                 5px 5px 5px black;
+}
+
+.hide-up {
+    margin-top: -80vh;
+    transition: margin-top 1.5s;
+}
+
+main {
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+        "edit header header "
+        "edit image image";
+    overflow: hidden;
+    color: rgb(231, 230, 230);
+    font-size: 1.03em;
+    margin-top: 20px;
+}
+
+#upload-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: header;
+    font-size: 1em;
+    border-bottom: black 1px solid;
+    background-image: url('static/cbn1.jpg');
+    background-size: cover;
+    background-position: left;
+    background-position: right;
+}
+
+#upload-form label {
+    font-size: 1.4em;
+    margin-right: 1.2em;
+}
+
+button {
+    background-color: rgb(63, 12, 145);
+    color: orange;
+    padding: 10px 30px;
+}
+
+button:hover {
+    background-color: red;
+}
+
+input, button {
+    border-radius: 5px;
+}
+
+input[type=file],
+input[type=url] {
+    padding: 10px 10px;
+    border: red 1px solid;
+    border-radius: 5px;
+    margin-right: 1em;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+}
+
+#edit-zone {
+    grid-area: edit;
+    border-right: black 1px solid;
+    background-image: url('static/cbn1.jpg');
+    background-size: cover;
+    background-position: left;
+}
+
+#edit-zone p {
+    margin-bottom: 0;    
+}
+
+.edit-detail-1 {
+    padding: 5px;
+}
+
+.edit-detail-1 > div {
+    padding: 5px;
+    border: black 1px solid;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: rgba(19, 14, 109, 0.813);
+}
+
+.edit-label-1 {
+    width: 35%;
+}
+
+fieldset {
+    border: none;
+}
+
+#save-btn {
+    height: 10%;
+}
+
+#meme-zone {
+    width: 100%;
+    height: 100%;
+    grid-area: image;
+    overflow: hidden;
+    position: relative;
+    background-color: rgb(71, 71, 71);
+}
+
+.gallery {
+    padding: 2%;
+    font-family: 'Sigmar One', cursive;
+}
+
+.gallery-item {
+    margin: 50px 10px 10px 10px;
+}
+
+.flex-std {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-std-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.display-none {
+    display: none;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.mr-3 {
+    margin-right: 15px;
+}
+
+.mt-5 {
+    margin-top: 35px;
+}
+
+.tiny {
+    font-size: xx-small;
+}
+
+@media only screen and (max-height: 500px) {
+    body {
+        font-size: 5px;
+        padding: 0;
+    }
+
+    #edit-zone {
+        overflow: scroll;
+    }
+}
+
+@media only screen and (min-height: 501px) and
+(max-height: 1000px) {
+    body {
+        font-size: .5em;
+        padding: 0;
+    }
+
+    #edit-zone {
+        overflow: scroll;
+    }
+}
