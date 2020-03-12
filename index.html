@@ -38,110 +38,120 @@
         <section id="edit-zone">
 
             <form action="" id="edit-form">
-            <div id="zoom-img" class="edit-detail-1">
-                <p class="mr-3">Zoom:</p>
-                <div class="flex-std">                    
-                    <img id="zoom-in" class="mr-3 cursor-p" src="static/zoom-in.png" width="30px" height="30px"></img>
-                    <img id="zoom-out" class="mr-3 cursor-p" src="static/zoom-out.png" width="30px" height="30px"></img>
-                </div>
-            </div>
 
-            <div id="crop-img" class="flex-std-col edit-detail-1">
-                <p>Crop:</p>
-                <div class="flex-std width-100">
-
-                    <div id="crop-label" class="flex-std-col inline-block edit-label-1">
-                        <div for="crop-top">Top</div>
-                        <div for="crop-bottom">Bottom</div>
-                        <div for="crop-left">Left</div>
-                        <div for="crop-right">Right</div>
+                <div id="zoom-img" class="flex-std-col edit-detail-1">
+                    <div class="width-100">
+                        <p>Zoom:</p>
+                        <div class="flex-std width-100">                    
+                            <img id="zoom-in" class="mr-3 cursor-p" src="static/zoom-in.png" width="30px" height="30px"></img>
+                            <img id="zoom-out" class="mr-3 cursor-p" src="static/zoom-out.png" width="30px" height="30px"></img>
+                        </div>
                     </div>
-                    
-                    <fieldset id="crop-form">
-                            <input type="range" id="crop-top" name="crop-top" min="0" max="80" value="0">
-                        <br>
-                            <input type="range" id="crop-bottom" name="crop-bottom" min="0" max="80" value="0">
-                        <br>
-                            <input type="range" id="crop-left" name="crop-left" min="0" max="80" value="0">
-                        <br>
-                            <input type="range" id="crop-right" name="crop-right" min="0" max="80" value="0">                          
-                    </fieldset>
-    
                 </div>
-                <a href="#" id="reset-crop" class="tiny">Reset</a>
-            </div>
-            
-            <div id="scale-img" class="flex-std-col edit-detail-1">
-                <p>Scale:</p>
-                <div class="flex-std width-100">
 
-                    <div id="scale-label" class="flex-std-col inline-block edit-label-1">
-                        <div for="scale-x">Scale X</div>
-                        <div for="scale-y">Scale Y</div>
-                    </div>
-                    
-                    <fieldset id="scale-form">
-                            <input type="range" id="scale-x" name="scale-x" min="1" max="200" value="100">
-                        <br>
-                            <input type="range" id="scale-y" name="scale-y" min="1" max="200" value="100">                         
-                    </fieldset>
-    
-                </div>
-                <a href="#" id="reset-scale" class="tiny">Reset</a>
-            </div>
-            
-            <div id="overlay-filter" class="flex-std-col edit-detail-1">
-                <p>Overlay:</p>
-                <div class="flex-std width-100">
+                <div id="crop-img" class="flex-std-col edit-detail-1">
+                    <div class="width-100">
+                        <p>Crop:</p>
+                        <div class="flex-std width-100">
 
-                    <div id="overlay-label" class="flex-std-col inline-block edit-label-1">
-                        <div>Color</div>
-                        <div>Opacity</div>
-                    </div>
-                    
-                    <fieldset id="scale-form">
-                            <input type="color" id="overlay-color" name="overlay-color">
-                        <br>
-                            <input type="range" id="overlay-opacity" name="overlay-opacity" min="0" max="100" value="0">                         
-                    </fieldset>
-                </div>
-            </div>
-            
-            <div id="overlay-text" class="flex-std-col edit-detail-1">
-
-                <p>Text Area 1:</p>
-                <div class="flex-std width-100">                  
-                    <fieldset id="text-form-1">
-                            <input type="text" id="overlay-text-1" name="overlay-text-1"
-                            placeholder="This meme..."><br>
-                            <div class="inline-block">
-                                <label for="text-1-color" class="">Color</label>
-                                <input type="color" id="text-1-color" name="text-1-color" class="mr-3">
+                            <div id="crop-label" class="flex-std-col inline-block edit-label-1">
+                                <div for="crop-top">Top</div>
+                                <div for="crop-bottom">Bottom</div>
+                                <div for="crop-left">Left</div>
+                                <div for="crop-right">Right</div>
                             </div>
-                            <div class="inline-block">
-                                <label for="text-1-stroke-color" class="">Outline</label>
-                                <input type="color" id="text-1-stroke-color" name="text-1-stroke-color" value="#FFFFFF">
-                            </div>                    
-                    </fieldset>
+                            
+                            <fieldset id="crop-form">
+                                    <input type="range" id="crop-top" name="crop-top" min="0" max="80" value="0">
+                                <br>
+                                    <input type="range" id="crop-bottom" name="crop-bottom" min="0" max="80" value="0">
+                                <br>
+                                    <input type="range" id="crop-left" name="crop-left" min="0" max="80" value="0">
+                                <br>
+                                    <input type="range" id="crop-right" name="crop-right" min="0" max="80" value="0">                          
+                            </fieldset>
+            
+                        </div>
+                        <a href="#" id="reset-crop" class="tiny">Reset</a>
+                    </div>
                 </div>
                 
-                <p>Text Area 2:</p>
-                <div class="flex-std width-100">                  
-                    <fieldset id="text-form-2">
-                            <input type="text" id="overlay-text-2" name="overlay-text-2"
-                            placeholder="is the memeiest -_-"><br>
-                            <div class="inline-block">
-                                <label for="text-2-color" class="">Color</label>
-                                <input type="color" id="text-2-color" name="text-2-color" class="mr-3">
-                            </div>
-                            <div class="inline-block">
-                                <label for="text-2-stroke-color" class="">Outline</label>
-                                <input type="color" id="text-2-stroke-color" name="text-2-stroke-color" value="#FFFFFF">   
-                            </div>                 
-                    </fieldset>
-                </div>
+                <div id="scale-img" class="flex-std-col edit-detail-1">
+                    <div class="width-100">
+                        <p>Scale:</p>
+                        <div class="flex-std width-100">
 
-            </div>
+                            <div id="scale-label" class="flex-std-col inline-block edit-label-1">
+                                <div for="scale-x">Scale X</div>
+                                <div for="scale-y">Scale Y</div>
+                            </div>
+                            
+                            <fieldset id="scale-form">
+                                    <input type="range" id="scale-x" name="scale-x" min="1" max="200" value="100">
+                                <br>
+                                    <input type="range" id="scale-y" name="scale-y" min="1" max="200" value="100">                         
+                            </fieldset>
+            
+                        </div>
+                        <a href="#" id="reset-scale" class="tiny">Reset</a>
+                    </div>    
+                </div>
+                
+                <div id="overlay-filter" class="flex-std-col edit-detail-1">
+                    <div class="width-100">
+                        <p>Overlay:</p>
+                        <div class="flex-std width-100">
+
+                            <div id="overlay-label" class="flex-std-col inline-block edit-label-1">
+                                <div>Color</div>
+                                <div>Opacity</div>
+                            </div>
+                            
+                            <fieldset id="scale-form">
+                                    <input type="color" id="overlay-color" name="overlay-color">
+                                <br>
+                                    <input type="range" id="overlay-opacity" name="overlay-opacity" min="0" max="100" value="0">                         
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="overlay-text" class="flex-std-col edit-detail-1">
+                    <div class="width-100">
+                        <p>Text Area 1:</p>
+                        <div class="flex-std width-100">                  
+                            <fieldset id="text-form-1">
+                                    <input type="text" id="overlay-text-1" name="overlay-text-1"
+                                    placeholder="This meme..."><br>
+                                    <div class="inline-block">
+                                        <label for="text-1-color" class="">Color</label>
+                                        <input type="color" id="text-1-color" name="text-1-color" class="mr-3">
+                                    </div>
+                                    <div class="inline-block">
+                                        <label for="text-1-stroke-color" class="">Outline</label>
+                                        <input type="color" id="text-1-stroke-color" name="text-1-stroke-color" value="#FFFFFF">
+                                    </div>                    
+                            </fieldset>
+                        </div>
+                        
+                        <p>Text Area 2:</p>
+                        <div class="flex-std width-100">                  
+                            <fieldset id="text-form-2">
+                                    <input type="text" id="overlay-text-2" name="overlay-text-2"
+                                    placeholder="is the memeiest -_-"><br>
+                                    <div class="inline-block">
+                                        <label for="text-2-color" class="">Color</label>
+                                        <input type="color" id="text-2-color" name="text-2-color" class="mr-3">
+                                    </div>
+                                    <div class="inline-block">
+                                        <label for="text-2-stroke-color" class="">Outline</label>
+                                        <input type="color" id="text-2-stroke-color" name="text-2-stroke-color" value="#FFFFFF">   
+                                    </div>                 
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                
             </form>
 
             <div id="save-btn" class="flex-std-col">
