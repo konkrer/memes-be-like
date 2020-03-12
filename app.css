@@ -70,8 +70,12 @@ main {
 }
 
 #upload-form label {
-    font-size: 1.6em;
+    font-size: 1.8em;
     margin-right: 1.2em;
+    text-shadow: 2px 2px 2px black, 
+                 -2px -2px 2px black, 
+                 -2px 2px 2px black, 
+                 2px -2px 2px black;
 }
 
 button {
@@ -92,7 +96,7 @@ input, button {
 
 input[type=file],
 input[type=url] {
-    max-width: 250px;
+    max-width: 280px;
     padding: 10px 10px;
     border: red 1px solid;
     border-radius: 5px;
@@ -227,6 +231,10 @@ fieldset {
         max-width: 50px;
     }
 
+    button {
+        padding: 2px 4px;
+    }
+
 
 } 
 
@@ -248,6 +256,10 @@ fieldset {
     input[type=range] {
         max-width: 80px;
     }
+
+    button {
+        padding: 7px 15px;
+    }
 }
 
 @media only screen and (min-width: 1080px) and
@@ -267,5 +279,9 @@ fieldset {
 
     input[type=range] {
         max-width: 100px;
+    }
+
+    button {
+        padding: 8px 20px;
     }
 }
