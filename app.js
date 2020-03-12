@@ -7,7 +7,7 @@ const fileUploadWeb = document.querySelector('#upload-zone');
 const fileUploadLocal  = document.querySelector('#image-upload-local');
 let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext("2d");
-insertDefaultText();
+// insertDefaultText();
 
 // editing data variables
 let image, topCrop = 0, bottomCrop = 0, leftCrop = 0, rightCrop = 0;
@@ -44,7 +44,7 @@ document.querySelector('header button').addEventListener('click', (e) => {
 // Fade in
 setTimeout(() => {
     document.querySelector('header').classList.remove('hidden');
-}, 300);
+}, 200);
 
 
 
@@ -256,14 +256,14 @@ function resetAll() {
 }
 
 
-function insertDefaultText() {
-    canvas.width = 800;
-    canvas.height = 700;
-    ctx.font = '80px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('This meme...', canvas.width/2, 100, canvas.width);
-    ctx.fillText('is the memeiest -_-', canvas.width/2, canvas.height - 50, canvas.width);
-}
+// function insertDefaultText() {
+//     canvas.width = 800;
+//     canvas.height = 700;
+//     ctx.font = '80px monospace';
+//     ctx.textAlign = 'center';
+//     ctx.fillText('This meme...', canvas.width/2, 100, canvas.width);
+//     ctx.fillText('is the memeiest -_-', canvas.width/2, canvas.height - 50, canvas.width);
+// }
 
 // helper function from S.O. https://stackoverflow.com/a/21648508/11164558
 function hexToRgbA(hex, opacity){
