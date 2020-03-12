@@ -20,13 +20,18 @@
         <section id="upload-zone">
             <form action="" enctype="multipart/form-data" id="upload-form">
                 <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
-                <label for="image-upload">File Upload
-                    <input type="file" id="image-upload-local" name="image-upload"
-                    multiple="false" accept="image/*">
-                <label for="image-upload-web">Web Link
-                    <input type="url" id="image-upload-web" name="image-upload-web">
-                </label>
-                <button type="submit">Load</button>
+                <div class="inline-block">
+                    <label for="image-upload">File Upload
+                        <input type="file" id="image-upload-local" name="image-upload"
+                        multiple="false" accept="image/*">
+                    </label>
+                </div>
+                <div class="inline-block">
+                    <label for="image-upload-web">Web Link
+                        <input type="url" id="image-upload-web" name="image-upload-web">
+                    </label>
+                    <button type="submit">Load</button>
+                </div>
             </form>
         </section>
 

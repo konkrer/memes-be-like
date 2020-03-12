@@ -70,7 +70,7 @@ main {
 }
 
 #upload-form label {
-    font-size: 1.4em;
+    font-size: 1.6em;
     margin-right: 1.2em;
 }
 
@@ -92,6 +92,7 @@ input, button {
 
 input[type=file],
 input[type=url] {
+    max-width: 250px;
     padding: 10px 10px;
     border: red 1px solid;
     border-radius: 5px;
@@ -209,6 +210,11 @@ fieldset {
         padding: 0;
     }
 
+    #upload-form label {
+        font-size: .9em;
+        margin-right: 1em;
+    }
+
     main {
         font-size: smaller;
     }
@@ -232,7 +238,7 @@ fieldset {
 
     #upload-form label {
         font-size: 1em;
-        margin-right: 1.2em;
+        margin-right: 1.1em;
     }
 
     #zoom-img button {
@@ -251,7 +257,7 @@ fieldset {
     }
 
     #upload-form label {
-        font-size: 1em;
+        font-size: 1.2em;
         margin-right: 1.2em;
     }
 
