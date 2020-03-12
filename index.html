@@ -36,8 +36,8 @@
             <div id="zoom-img" class="edit-detail-1">
                 <p class="mr-3">Zoom:</p>
                 <div class="flex-std">                    
-                    <button id="zoom-in" class="mr-3">+</button>
-                    <button id="zoom-out" class="mr-3">-</button>
+                    <img id="zoom-in" class="mr-3 cursor-p" src="static/zoom-in.png" width="30px" height="30px"></img>
+                    <img id="zoom-out" class="mr-3 cursor-p" src="static/zoom-out.png" width="30px" height="30px"></img>
                 </div>
             </div>
 
@@ -109,8 +109,14 @@
                     <fieldset id="text-form-1">
                             <input type="text" id="overlay-text-1" name="overlay-text-1"
                             placeholder="This meme..."><br>
-                            <label for="text-1-color" class=" mr-3">Color</label>
-                            <input type="color" id="text-1-color" name="text-1-color">                      
+                            <div class="inline-block">
+                                <label for="text-1-color" class="">Color</label>
+                                <input type="color" id="text-1-color" name="text-1-color" class="mr-3">
+                            </div>
+                            <div class="inline-block">
+                                <label for="text-1-stroke-color" class="">Outline</label>
+                                <input type="color" id="text-1-stroke-color" name="text-1-stroke-color" value="#FFFFFF">
+                            </div>                    
                     </fieldset>
                 </div>
                 
@@ -119,8 +125,14 @@
                     <fieldset id="text-form-2">
                             <input type="text" id="overlay-text-2" name="overlay-text-2"
                             placeholder="is the memeiest -_-"><br>
-                            <label for="text-2-color" class=" mr-3">Color</label>
-                            <input type="color" id="text-2-color" name="text-2-color">                    
+                            <div class="inline-block">
+                                <label for="text-2-color" class="">Color</label>
+                                <input type="color" id="text-2-color" name="text-2-color" class="mr-3">
+                            </div>
+                            <div class="inline-block">
+                                <label for="text-2-stroke-color" class="">Outline</label>
+                                <input type="color" id="text-2-stroke-color" name="text-2-stroke-color" value="#FFFFFF">   
+                            </div>                 
                     </fieldset>
                 </div>
 

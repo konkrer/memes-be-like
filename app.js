@@ -27,6 +27,7 @@ cropSliders.addEventListener('change', cropImg);
 scaleSliders.addEventListener('change', scaleImg);
 overlayColor.addEventListener('change', paintImage);
 textAreas.addEventListener('keyup', paintImage);
+textAreas.addEventListener('change', paintImage);
 
 //Save functionality
 document.querySelector('#save-btn button').addEventListener('click', saveMeme);
@@ -35,6 +36,9 @@ document.querySelector('#save-btn button').addEventListener('click', saveMeme);
 document.querySelector('header button').addEventListener('click', (e) => {
     e.target.parentElement.classList.add('hide-up');
     document.querySelector('main').classList.remove('display-none');
+    setTimeout(() => {
+        document.body.style.overflow = 'auto';
+    }, 3000);
 });
 
 // Fade in
@@ -112,7 +116,7 @@ function paintImage() {
 
 
 function zoomImg(e) {
-    e.preventDefault();
+    // e.preventDefault();
     const id = e.target.id;
     switch(id) {
         case 'zoom-in':
@@ -204,33 +208,24 @@ function changeOverlayText(e) {
     ctx.font = '80px Bangers';
     ctx.textAlign = 'center';
     
-    const text1 = document.querySelector('#text-form-1');
-    ctx.fillStyle = text1.lastElementChild.value;
-    ctx.fillText(text1.firstElementChild.value, canvas.width/2, 100, canvas.width);
+    const text1 = document.querySelector('#overlay-text-1').value;
+    ctx.fillStyle = document.querySelector('#text-1-color').value;
+    ctx.strokeStyle = document.querySelector('#text-1-stroke-color').value;
+    ctx.fillText(text1, canvas.width/2, 100, canvas.width);
+    ctx.strokeText(text1, canvas.width/2, 100, canvas.width);
     
-    const text2 = document.querySelector('#text-form-2');
-    ctx.fillStyle = text2.lastElementChild.value;
-    ctx.fillText(text2.firstElementChild.value, canvas.width/2, canvas.height - 50, canvas.width);
+    const text2 = document.querySelector('#overlay-text-2').value;
+    ctx.fillStyle = document.querySelector('#text-2-color').value;
+    ctx.strokeStyle = document.querySelector('#text-2-stroke-color').value;
+    ctx.fillText(text2, canvas.width/2, canvas.height - 50, canvas.width);
+    ctx.strokeText(text2, canvas.width/2, canvas.height - 50, canvas.width);
 }
 
 
 function saveMeme(e) {
     const wrapper = document.createElement('div');
     wrapper.style.position = 'relative';
-    // wrapper.style.width = `${canvas.width}px`;
-    wrapper.classList.add('gallery-item')
-    
-    // const colorOverlay = document.createElement('div');
-    // colorOverlay.style.backgroundColor = canvas.nextElementSibling.style.backgroundColor;
-    // colorOverlay.style.opacity = canvas.nextElementSibling.style.opacity;
-    // colorOverlay.classList.add('filter-overlay');
-
-    // const textOverlay = document.createElement('div');
-    // textOverlay.innerHTML = document.querySelector('#canvas-wrapper').lastElementChild.innerHTML;
-    // textOverlay.classList.add('text-overlay');
-
-    // image.width = canvas.width;
-    // image.height = canvas.height;     
+    wrapper.classList.add('gallery-item')    
     wrapper.append(canvas);
 
     const remove = document.createElement('button');
