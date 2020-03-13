@@ -1,28 +1,29 @@
 'use strict'
 
 
-
 // display image variables
-const fileUploadWeb = document.querySelector('#upload-zone');
 const fileUploadLocal  = document.querySelector('#image-upload-local');
+const fileUploadForm = document.querySelector('#upload-form');
 let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext("2d");
-// insertDefaultText();
+
 
 // editing data variables
 let image, topCrop = 0, bottomCrop = 0, leftCrop = 0, rightCrop = 0;
 let currCanvasSizeBase = [1, 1];
 let scaleFactors = [1, 1];
 
-// edit elements
+
+// edit control elements
 const editZone = document.querySelector('#edit-zone');
 const zoomBtns = document.querySelector('#zoom-img');
 const cropSliders = document.querySelector('#crop-form');
-const scaleSliders = document.querySelector('#scale-img');
-const overlayColor = document.querySelector('#overlay-filter');
+const scaleSliders = document.querySelector('#scale-form');
+const overlayColor = document.querySelector('#filter-form');
 const textAreas = document.querySelector('#overlay-text');
 
-// editing listeners
+
+// editing event listeners
 editZone.addEventListener('mousewheel', mouseAdjust);
 zoomBtns.addEventListener('click', zoomImg);
 cropSliders.addEventListener('change', cropImg);
@@ -32,22 +33,19 @@ textAreas.addEventListener('keyup', paintImage);
 textAreas.addEventListener('change', paintImage);
 
 
-// zoom main
+// Make Memes button event listener - i.e. start button.
+document.querySelector('header button').addEventListener('click', startInit);
+
+// zoom main event listener
 document.querySelector('#canvas-wrapper').addEventListener('mousewheel', zoomMain);
 
-
-//Save functionality
+// Save meme event listener
 document.querySelector('#save-btn button').addEventListener('click', saveMeme);
 
-
-// Make Memes button - i.e. start button.
-document.querySelector('header button').addEventListener('click', (e) => {
-    e.target.parentElement.classList.add('hide-up');
-    document.querySelector('main').classList.remove('display-none');
-    setTimeout(() => {
-        document.body.style.overflow = 'auto';
-    }, 3000);
-});
+// file upload  event listeners
+// on local and web file input read data and load image to canvas
+fileUploadLocal.onchange = readImage;
+fileUploadForm.addEventListener('submit', webUpload);
 
 
 // Fade in
@@ -56,56 +54,18 @@ setTimeout(() => {
 }, 200);
 
 
-
-// this function copied from Stack Overflow for the most part
-// https://stackoverflow.com/a/42614316
-fileUploadLocal.onchange = readImage;
-function readImage() {
-    resetAll();
-    document.querySelector('#edit-form').reset();
-    if ( this.files && this.files[0] ) {
-        // was not familiar with FileReader or creating Image objects like this
-        var FR= new FileReader();
-        FR.onload = function(e) {
-            var img = new Image();
-            img.src = e.target.result;
-           
-            img.onload = function() {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-                image = img;
-                document.querySelector("#image-upload-web").value = "";
-            };
-        };       
-        FR.readAsDataURL( this.files[0] );
-    }
+// start button function -
+// slide header off screen and change overflow to auto after slide up complete
+function startInit(e) {
+    e.target.parentElement.classList.add('hide-up');
+    document.querySelector('main').classList.remove('display-none');
+    setTimeout(() => {
+        document.body.style.overflow = 'auto';
+    }, 3000);
 }
 
 
-fileUploadWeb.addEventListener('submit', (e) => {
-    e.preventDefault();
-    resetAll();
-    document.querySelector('#edit-form').reset();
-    let webLink = document.querySelector('#image-upload-web').value;
-    const img = new Image();
-    img.src = webLink;
-    img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        image = img;
-        fileUploadLocal.value = "";
-    }
-})
-
-
-function resetImgScale() {
-    currCanvasSizeBase = [1, 1];
-    scaleFactors = [1, 1];
-}
-
-
+// main paint to canvas function
 function paintImage() {
     if (!image) return;
 
@@ -116,23 +76,24 @@ function paintImage() {
 
         canvas.width = sWidth * currCanvasSizeBase[0] * scaleFactors[0];
         canvas.height = sHeight * currCanvasSizeBase[1] * scaleFactors[1];
-
         ctx.drawImage(image, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
 
         changeOverlayFilter();
         changeOverlayText();
-
 }
 
 
+// allow mousewhell events in canvas wrapper to change zoom level
 function zoomMain(e) {
     e.preventDefault();
     zoomImg(changeIdForZoom(e));
 }
 
 
+// deligate edit-zone mousewheel events to proper funcitons
 function mouseAdjust(e) {
     e.preventDefault();
+    
     if (e.target.id.includes('zoom')) {      
         zoomImg(changeIdForZoom(e));
         return;
@@ -161,6 +122,8 @@ function mouseAdjust(e) {
 }
 
 
+// change id to zoom-in or zoom-out on dummy e object
+// allowing zoomImg to function with mousewheel scroll events
 function changeIdForZoom(e) {
     if (+e.wheelDeltaY < 0) {
         e = {target: {id: 'zoom-in'}};
@@ -168,6 +131,8 @@ function changeIdForZoom(e) {
     return e;
 }
 
+
+// use mousewheel events to change slider values
 function mouseChangeSliderValue(e) {
     if (+e.wheelDeltaY < 0) {
         e.target.value = +e.target.value + 1;
@@ -256,6 +221,7 @@ document.querySelector('#reset-scale').addEventListener('click', (e) => {
 });
 
 
+// change overlay color filter
 function changeOverlayFilter(e) {
     let color = document.querySelector('#overlay-color').value;
     let opacity = document.querySelector('#overlay-opacity').value / 100;
@@ -282,6 +248,7 @@ function changeOverlayText(e) {
 }
 
 
+// save meme function
 function saveMeme(e) {
     const wrapper = document.createElement('div');
     wrapper.style.position = 'relative';
@@ -299,27 +266,34 @@ function saveMeme(e) {
     gallery.append(wrapper, remove);
     gallery.classList.remove('display-none');
 
-    resetAll();
-    document.querySelector('#upload-form').reset();
-
     const newCanvas = document.createElement('canvas');
     document.querySelector('#canvas-wrapper').append(newCanvas);
     canvas = document.querySelector('canvas');
     ctx = canvas.getContext("2d");
     insertDefaultText();
+
+    resetAllEditControlsValues();
+    document.querySelector('#upload-form').reset();
 }
 
 
-function resetAll() {
+//reset all edit control sliders and values
+function resetAllEditControlsValues() {
     document.querySelector('#edit-form').reset(); 
     topCrop = 0, bottomCrop = 0, leftCrop = 0, rightCrop = 0;
     resetImgScale();
 }
 
 
+// reset zoom and scale base factors
+function resetImgScale() {
+    currCanvasSizeBase = [1, 1];
+    scaleFactors = [1, 1];
+}
+
+
+// insert text after meme saved showing user how to reload image
 function insertDefaultText() {
-//     canvas.width = 800;
-//     canvas.height = 700;
     ctx.font = '30px BenchNine';
     ctx.textAlign = 'center';
     ctx.fillText('Mouse Scroll Here', canvas.width/2, 36, canvas.width);
