@@ -15,6 +15,7 @@ let currCanvasSizeBase = [1, 1];
 let scaleFactors = [1, 1];
 
 // edit elements
+const editZone = document.querySelector('#edit-zone');
 const zoomBtns = document.querySelector('#zoom-img');
 const cropSliders = document.querySelector('#crop-form');
 const scaleSliders = document.querySelector('#scale-img');
@@ -22,6 +23,7 @@ const overlayColor = document.querySelector('#overlay-filter');
 const textAreas = document.querySelector('#overlay-text');
 
 // editing listeners
+editZone.addEventListener('mousewheel', mouseAdjust);
 zoomBtns.addEventListener('click', zoomImg);
 cropSliders.addEventListener('change', cropImg);
 scaleSliders.addEventListener('change', scaleImg);
@@ -29,8 +31,14 @@ overlayColor.addEventListener('change', paintImage);
 textAreas.addEventListener('keyup', paintImage);
 textAreas.addEventListener('change', paintImage);
 
+
+// zoom main
+document.querySelector('#canvas-wrapper').addEventListener('mousewheel', zoomMain);
+
+
 //Save functionality
 document.querySelector('#save-btn button').addEventListener('click', saveMeme);
+
 
 // Make Memes button - i.e. start button.
 document.querySelector('header button').addEventListener('click', (e) => {
@@ -40,6 +48,7 @@ document.querySelector('header button').addEventListener('click', (e) => {
         document.body.style.overflow = 'auto';
     }, 3000);
 });
+
 
 // Fade in
 setTimeout(() => {
@@ -72,6 +81,7 @@ function readImage() {
         FR.readAsDataURL( this.files[0] );
     }
 }
+
 
 fileUploadWeb.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -115,8 +125,58 @@ function paintImage() {
 }
 
 
+function zoomMain(e) {
+    e.preventDefault();
+    zoomImg(changeIdForZoom(e));
+}
+
+
+function mouseAdjust(e) {
+    e.preventDefault();
+    if (e.target.id.includes('zoom')) {      
+        zoomImg(changeIdForZoom(e));
+        return;
+    }
+    if (e.target.type!=='range') return;
+    e = mouseChangeSliderValue(e);
+
+    const parentId = e.target.parentElement.id;    
+    switch(parentId) {
+        case 'zoom-form':
+            zoomImg(e);
+            break;
+        case 'crop-form':
+            cropImg(e);
+            break;
+        case 'scale-form':
+            scaleImg(e)
+            break;
+        case 'filter-form':
+            paintImage();
+            break;
+        default:
+            console.error("bad mouse wheel flag");
+            break;
+    }  
+}
+
+
+function changeIdForZoom(e) {
+    if (+e.wheelDeltaY < 0) {
+        e = {target: {id: 'zoom-in'}};
+    }else e = {target: {id: 'zoom-out'}};
+    return e;
+}
+
+function mouseChangeSliderValue(e) {
+    if (+e.wheelDeltaY < 0) {
+        e.target.value = +e.target.value + 1;
+    }else e.target.value = +e.target.value - 1;
+    return e;
+}
+
+
 function zoomImg(e) {
-    // e.preventDefault();
     const id = e.target.id;
     switch(id) {
         case 'zoom-in':
@@ -246,6 +306,7 @@ function saveMeme(e) {
     document.querySelector('#canvas-wrapper').append(newCanvas);
     canvas = document.querySelector('canvas');
     ctx = canvas.getContext("2d");
+    insertDefaultText();
 }
 
 
@@ -256,14 +317,16 @@ function resetAll() {
 }
 
 
-// function insertDefaultText() {
+function insertDefaultText() {
 //     canvas.width = 800;
 //     canvas.height = 700;
-//     ctx.font = '80px monospace';
-//     ctx.textAlign = 'center';
-//     ctx.fillText('This meme...', canvas.width/2, 100, canvas.width);
-//     ctx.fillText('is the memeiest -_-', canvas.width/2, canvas.height - 50, canvas.width);
-// }
+    ctx.font = '30px BenchNine';
+    ctx.textAlign = 'center';
+    ctx.fillText('Mouse Scroll Here', canvas.width/2, 36, canvas.width);
+    ctx.fillText('To Reload Last Image', canvas.width/2, canvas.height - 18, canvas.width);
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+}
+
 
 // helper function from S.O. https://stackoverflow.com/a/21648508/11164558
 function hexToRgbA(hex, opacity){
