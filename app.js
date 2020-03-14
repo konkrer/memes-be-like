@@ -58,10 +58,12 @@ setTimeout(() => {
 // start button function -
 // slide header off screen and change overflow to auto after slide up complete
 function startInit(e) {
-    e.target.parentElement.classList.add('hide-up');
+    const header = e.target.parentElement;
+    header.classList.add('hide-up');
     document.querySelector('main').classList.remove('display-none');
     setTimeout(() => {
-        document.body.style.overflow = 'auto';
+        document.body.style.overflowY = 'auto';
+        header.classList.add('display-none');
     }, 3000);
 }
 
@@ -86,7 +88,6 @@ function paintImage() {
 
 // allow mousewhell events in canvas wrapper to change zoom level
 function zoomMain(e) {
-    console.log(e)
     e.preventDefault();
     zoomImg(changeIdForZoom(e));
 }
@@ -267,6 +268,7 @@ function saveMeme(e) {
     const gallery = document.querySelector('.gallery');
     gallery.append(wrapper, remove);
     gallery.classList.remove('display-none');
+    document.body.style.paddingBottom = "3em";
 
     const newCanvas = document.createElement('canvas');
     document.querySelector('#canvas-wrapper').append(newCanvas);

@@ -8,7 +8,6 @@ body {
                     rgba(179, 48, 8, 0.3)
                     );
     text-align: center;
-    padding: 0 2%;
     font-family: 'BenchNine', sans-serif;
     overflow: hidden;
 }
@@ -57,6 +56,7 @@ main {
     font-size: 1em;
     background:  url('static/carbn_rect.png');
     background-size: initial;
+    height: 98vh;
 }
 
 #upload-zone {
@@ -80,6 +80,17 @@ main {
                  margin-right: 1em;
 }
 
+input[type=file],
+input[type=url] {
+    max-width: 310px;
+    /* max-height: 40px; */
+    padding: 0px 10px;
+    border: red 1px solid;
+    border-radius: 5px;  
+    background-color: rgba(0, 0, 0, 1);
+    color: white;
+}
+
 main button,
 .gallery button {
     background-color: #0cb218;
@@ -96,16 +107,6 @@ button:hover {
 input, button {
     border-radius: 5px;
     cursor: pointer;
-}
-
-input[type=file],
-input[type=url] {
-    max-width: 310px;
-    padding: 10px 10px;
-    border: red 1px solid;
-    border-radius: 5px;  
-    background-color: rgba(0, 0, 0, 1);
-    color: white;
 }
 
 #edit-zone {
@@ -147,13 +148,13 @@ fieldset {
     border: none;
     margin: 0;
     padding: 0;
-    width: 80px;
+    width: 90%;
     display: inline-block;
 }
 
-/* input[type=range] {
+input[type=range] {
     width: 100%;
-} */
+}
 
 #save-btn {
     height: 10%;
@@ -243,14 +244,9 @@ fieldset {
 }
 
 @media only screen and (max-width: 994px) {
-    body {
-        padding: 0;
-        padding-bottom: 2em;
-    }
 
     main {
         font-size: smaller;
-        height: 100vh;
     }
 
     #upload-form label {
@@ -260,6 +256,10 @@ fieldset {
 
     input[type=file] {
         max-width: 150px;
+    }
+
+    input[type=url] {
+        padding: 3px 10px;
     }
 
     #edit-zone p {
@@ -274,11 +274,8 @@ fieldset {
         padding: 5px;
     }
 
-    input[type=range] {
-        max-width: 100px;
-    }
-
-    main button {
+    main button,
+    .gallery button {
     padding: 2px 4px;
     font-size: 1rem;
     }
@@ -290,14 +287,6 @@ fieldset {
 
 @media only screen and (min-width: 995px) and
 (max-width: 1079px) {
-    body {
-        padding: 0;
-        padding-bottom: 2em;
-    }
-
-    main {
-        height: 97vh;
-    }
 
     #upload-form label {
         font-size: 1.4em;
@@ -308,12 +297,13 @@ fieldset {
         padding: 10px;
     }
 
-    input[type=range] {
-        max-width: 140px;
+    input[type=url] {
+        padding: 3px 10px;
     }
 
-    button {
-        padding: 7px 15px;
+    main button,
+    .gallery button {
+        padding: 5px 15px;
     }
 
     #edit-zone p {
@@ -327,30 +317,23 @@ fieldset {
 
 @media only screen and (min-width: 1080px) and
 (max-width: 1383px) {
-    body {
-        padding: 0;
-        padding-bottom: 2em;
-    }
-
-    main {
-        height: 95vh;
-    }
 
     #upload-form label {
         font-size: 1.4em;
         margin-right: 1.2em;
     }
 
-    input[type=range] {
-        max-width: 160px;
+    input[type=url] {
+        padding: 3px 10px;
     }
 
     #zoom-img button {
         padding: 15px;
     }
 
-    button {
-        padding: 8px 20px;
+    main button,
+    .gallery button {
+        padding: 5px 20px;
     }
 
     #edit-zone p {
@@ -360,18 +343,34 @@ fieldset {
     .tiny {
         font-size: smaller;
     }
+
+    #edit-zone {
+        padding: 0 15px;
+    }
 }
 
-@media only screen and (min-width: 1384px) and
-(max-width: 1500px) {
+
+@media only screen and (min-width: 1384px) {
     body {
-        padding: 0;
-        padding-bottom: 2em;
+        padding: 0 2%;
+    }
+
+    input[type=url] {
+        padding: 3px 10px;
+    }
+
+    #edit-zone {
+        padding: 0 15px;
     }
 }
 
 @media only screen and (min-width: 1501px) {
+    body {
+        padding: 0 2%;
+    }
+
     main {
         margin-top: 20px;
+        height: 90vh;
     }
 }

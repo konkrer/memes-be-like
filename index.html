@@ -33,7 +33,7 @@
                     <label for="image-upload-web">Web Link
                         <input type="url" id="image-upload-web" name="image-upload-web">
                     </label>
-                    <button type="submit">Load</button>
+                    <button type="submit">Upload</button>
                 </div>
             </form>
         </section>
@@ -65,16 +65,20 @@
                             </div> -->
                             
                             <fieldset id="crop-form">
-                                    <label>Top </label>
+                                    <label for="crop-top">Top </label>
+                                    <br>
                                     <input type="range" id="crop-top" name="crop-top" min="0" max="80" value="0">
-                                    
-                                    <label>Bottom</label>
+                                    <br>
+                                    <label for="crop-bottom">Bottom</label>
+                                    <br>
                                     <input type="range" id="crop-bottom" name="crop-bottom" min="0" max="80" value="0">
-                                    
-                                    <label>Left </label>
+                                    <br>
+                                    <label for="crop-left">Left </label>
+                                    <br>
                                     <input type="range" id="crop-left" name="crop-left" min="0" max="80" value="0">
-                                    
-                                    <label>Right</label>
+                                    <br>
+                                    <label for="crop-right">Right</label>
+                                    <br>
                                     <input type="range" id="crop-right" name="crop-right" min="0" max="80" value="0"> 
                                                              
                             </fieldset>
@@ -95,10 +99,10 @@
                             </div> -->
                             
                             <fieldset id="scale-form">
-                                    <label class="mr-3-1">Scale X</label>
+                                    <label class="mr-3-1">Scale X</label><br>
                                     <input type="range" id="scale-x" name="scale-x" min="1" max="200" value="100">
 
-                                    <label class="mr-3">Scale Y</label>
+                                    <label class="mr-3">Scale Y</label><br>
                                     <input type="range" id="scale-y" name="scale-y" min="1" max="200" value="100">                         
                             </fieldset>
             
@@ -137,11 +141,11 @@
                                     <input type="text" id="overlay-text-1" name="overlay-text-1"
                                     placeholder="This meme..."><br>
                                     <div class="inline-block">
-                                        <label for="text-1-color" class="">Color</label>
+                                        <label for="text-1-color" class="">Color</label><br>
                                         <input type="color" id="text-1-color" name="text-1-color" class="mr-3">
                                     </div>
                                     <div class="inline-block">
-                                        <label for="text-1-stroke-color" class="">Outline</label>
+                                        <label for="text-1-stroke-color" class="">Outline</label><br>
                                         <input type="color" id="text-1-stroke-color" name="text-1-stroke-color" value="#FFFFFF">
                                     </div>                    
                             </fieldset>
@@ -153,11 +157,11 @@
                                     <input type="text" id="overlay-text-2" name="overlay-text-2"
                                     placeholder="is the memeiest -_-"><br>
                                     <div class="inline-block">
-                                        <label for="text-2-color" class="">Color</label>
+                                        <label for="text-2-color" class="">Color</label><br>
                                         <input type="color" id="text-2-color" name="text-2-color" class="mr-3">
                                     </div>
                                     <div class="inline-block">
-                                        <label for="text-2-stroke-color" class="">Outline</label>
+                                        <label for="text-2-stroke-color" class="">Outline</label><br>
                                         <input type="color" id="text-2-stroke-color" name="text-2-stroke-color" value="#FFFFFF">   
                                     </div>                 
                             </fieldset>
