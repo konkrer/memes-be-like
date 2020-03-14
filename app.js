@@ -1,37 +1,29 @@
 'use strict'
 
 
-// display image variables
-const fileUploadLocal = document.querySelector('#image-upload-local');
-const fileUploadForm = document.querySelector('#upload-form');
-let canvas = document.querySelector('canvas');
-let ctx = canvas.getContext("2d");
-
 
 // editing data variables
 let image, topCrop = 0, bottomCrop = 0, leftCrop = 0, rightCrop = 0;
 let currCanvasSizeBase = [1, 1];
 let scaleFactors = [1, 1];
+let outputScale = 1;
 
 
-// edit control elements
-const editZone = document.querySelector('#edit-zone');
-const zoomBtns = document.querySelector('#zoom-img');
-const cropSliders = document.querySelector('#crop-form');
-const scaleSliders = document.querySelector('#scale-form');
-const overlayColor = document.querySelector('#filter-form');
+// edit control variables
 const textAreas = document.querySelector('#overlay-text');
+const mousewheelevt = (/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
 
 
 // editing event listeners
-const mousewheelevt = (/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
-editZone.addEventListener(mousewheelevt, mouseAdjust);
-zoomBtns.addEventListener('click', zoomImg);
-cropSliders.addEventListener('change', cropImg);
-scaleSliders.addEventListener('change', scaleImg);
-overlayColor.addEventListener('change', paintImage);
+document.querySelector('#edit-form').addEventListener(mousewheelevt, mouseAdjust);
+document.querySelector('#zoom-img').addEventListener('click', zoomImg);
 textAreas.addEventListener('keyup', paintImage);
 textAreas.addEventListener('change', paintImage);
+document.querySelector('#filter-form').addEventListener('change', paintImage);
+document.querySelector('#advanced-vis-control').addEventListener('click', toggleAdvanced);
+document.querySelector('#crop-form').addEventListener('change', cropImg);
+document.querySelector('#scale-form').addEventListener('change', scaleImg);
+document.getElementById('output-scale').addEventListener('change', changeOutputScaleValue);
 
 
 // Make Memes button event listener - i.e. start button.
@@ -42,12 +34,6 @@ document.querySelector('#canvas-wrapper').addEventListener(mousewheelevt, zoomMa
 
 // Save meme event listener
 document.querySelector('#save-btn button').addEventListener('click', saveMeme);
-
-// file upload  event listeners
-// on local and web file input read data and load image to canvas
-fileUploadLocal.onchange = readImage;
-fileUploadForm.addEventListener('submit', webUpload);
-
 
 // Fade in
 setTimeout(() => {
@@ -80,9 +66,22 @@ function paintImage() {
         canvas.width = sWidth * currCanvasSizeBase[0] * scaleFactors[0];
         canvas.height = sHeight * currCanvasSizeBase[1] * scaleFactors[1];
         ctx.drawImage(image, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
+        showImageSize();
 
         changeOverlayFilter();
         changeOverlayText();
+}
+
+
+// display image size in scale output area
+function showImageSize() {
+    const width = canvas.width, height = canvas.height;
+    document.getElementById(
+        'current-size'
+        ).innerText = `${Math.round(width)} X ${Math.round(height)}`;
+    document.getElementById(
+        'output-size'
+        ).innerText = `${Math.round(width * outputScale)} X ${Math.round(height * outputScale)}`;
 }
 
 
@@ -101,14 +100,21 @@ function mouseAdjust(e) {
         zoomImg(changeIdForZoom(e));
         return;
     }
-    if (e.target.type!=='range') return;
-    e = mouseChangeSliderValue(e);
+    if (e.target.type==='number') {
+        mouseChangeNumberValue(e),
+        changeOutputScaleValue(e);
+    }
+    if (e.target.type==='range') {
+        e = mouseChangeSliderValue(e);
+        sliderSwitch(e);     
+    }    
+}
 
-    const parentId = e.target.parentElement.id;    
+
+// make proper adjustment after any slider being moved
+function sliderSwitch(e) {
+    const parentId = e.target.parentElement.id;   
     switch(parentId) {
-        case 'zoom-form':
-            zoomImg(e);
-            break;
         case 'crop-form':
             cropImg(e);
             break;
@@ -121,7 +127,7 @@ function mouseAdjust(e) {
         default:
             console.error("bad mouse wheel flag");
             break;
-    }  
+    }
 }
 
 
@@ -134,6 +140,14 @@ function changeIdForZoom(e) {
     return e;
 }
 
+
+// use mousewheel events to change slider values
+function mouseChangeNumberValue(e) {
+    if ((e.wheelDeltaY && +e.wheelDeltaY < 0) || (e.detail && +e.detail > 0)) {
+        e.target.value = +e.target.value + 0.1;
+    }else e.target.value = +e.target.value - 0.1;
+    return e;
+}
 
 // use mousewheel events to change slider values
 function mouseChangeSliderValue(e) {
@@ -160,6 +174,14 @@ function zoomImg(e) {
             break;
     } 
     paintImage();
+}
+
+
+function toggleAdvanced(e) {
+    e.preventDefault();
+    document.getElementById('advanced-zone').classList.toggle('display-none');
+    if (e.target.innerText==="Show Advanced") e.target.innerText = "Hide Advanced"
+    else e.target.innerText = "Show Advanced";
 }
 
 
@@ -251,33 +273,44 @@ function changeOverlayText(e) {
 }
 
 
+function changeOutputScaleValue(e) {
+    let outScaleValue = e.target.value;
+    if (outScaleValue > 3) outScaleValue = 3;
+    else if (outScaleValue < 0.1) outScaleValue = 0.1;
+    outScaleValue = (Math.round(outScaleValue * 100 + Number.EPSILON) / 100) 
+    document.getElementById('output-scale').value = outScaleValue;
+    outputScale = outScaleValue;
+    showImageSize();
+}
+
+
 // save meme function
 function saveMeme(e) {
-    const wrapper = document.createElement('div');
-    wrapper.style.position = 'relative';
-    wrapper.classList.add('gallery-item')    
-    wrapper.append(canvas);
+    const gallery = document.querySelector('.gallery');
 
-    const remove = document.createElement('button');
-    remove.innerText = 'Remove this meme';
-    remove.addEventListener('click', (e) => {
+    const newImage = new Image();
+    newImage.classList.add('gallery-item');
+    newImage.src = canvas.toDataURL('image/png');
+    newImage.onload = () => {
+        newImage.width = newImage.width * outputScale;
+        newImage.height = newImage.height * outputScale;
+        gallery.lastElementChild.prepend(newImage, createDeleteBtn());
+        // don't actually NEED to do this each time
+        gallery.classList.remove('display-none');
+        document.body.style.paddingBottom = "3em";
+    }      
+}
+
+
+// factory function for remove button
+function createDeleteBtn() {
+    const btn = document.createElement('button');
+    btn.innerText = 'Remove this meme';
+    btn.addEventListener('click', (e) => {
         e.target.previousElementSibling.remove();
         e.target.remove();
-    })
-
-    const gallery = document.querySelector('.gallery');
-    gallery.append(wrapper, remove);
-    gallery.classList.remove('display-none');
-    document.body.style.paddingBottom = "3em";
-
-    const newCanvas = document.createElement('canvas');
-    document.querySelector('#canvas-wrapper').append(newCanvas);
-    canvas = document.querySelector('canvas');
-    ctx = canvas.getContext("2d");
-    insertDefaultText();
-
-    resetAllEditControlsValues();
-    document.querySelector('#upload-form').reset();
+    });
+    return btn;
 }
 
 
@@ -296,14 +329,14 @@ function resetImgScale() {
 }
 
 
-// insert text after meme saved showing user how to reload image
-function insertDefaultText() {
-    ctx.font = '30px BenchNine';
-    ctx.textAlign = 'center';
-    ctx.fillText('Mouse Scroll Here', canvas.width/2, 36, canvas.width);
-    ctx.fillText('To Reload Last Image', canvas.width/2, canvas.height - 18, canvas.width);
-    ctx.strokeRect(0, 0, canvas.width, canvas.height);
-}
+// // insert text after meme saved showing user how to reload image
+// function insertDefaultText() {
+//     ctx.font = '30px BenchNine';
+//     ctx.textAlign = 'center';
+//     ctx.fillText('Mouse Scroll Here', canvas.width/2, 36, canvas.width);
+//     ctx.fillText('To Reload Last Image', canvas.width/2, canvas.height - 18, canvas.width);
+//     ctx.strokeRect(0, 0, canvas.width, canvas.height);
+// }
 
 
 // helper function from S.O. https://stackoverflow.com/a/21648508/11164558
@@ -323,14 +356,14 @@ function hexToRgbA(hex, opacity){
 
 // from S.O. just extra stuff to look at for learning
 
-// canvas.nextElementSibling.onclick = function(e) {
+// canvas.onclick = function(e) {
     
 //     var x = e.offsetX;
 //     var y = e.offsetY;
 //     console.log(y)
 //     ctx.beginPath();
 //     ctx.fillStyle = 'black';
-//     ctx.arc(x, y, 5, 0, Math.PI * 2);
+//     ctx.arc(x, y, 15, 1, Math.PI * 2);
 //     ctx.fill();
 //     console.log('in canvas')
 //   };

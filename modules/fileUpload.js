@@ -1,6 +1,17 @@
 'use strict'
 
 
+const fileUploadLocal = document.querySelector('#image-upload-local');
+const fileUploadForm = document.querySelector('#upload-form');
+let canvas = document.querySelector('canvas');
+let ctx = canvas.getContext("2d");
+
+// file upload  event listeners
+// on local and web file input read data and load image to canvas
+fileUploadLocal.onchange = readImage;
+fileUploadForm.addEventListener('submit', webUpload);
+
+
 // this function copied from Stack Overflow for the most part
 // https://stackoverflow.com/a/42614316
 function readImage() {
@@ -13,9 +24,10 @@ function readImage() {
             img.src = e.target.result;
            
             img.onload = function() {
-                canvas.width = img.width;
-                canvas.height = img.height;
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
                 ctx.drawImage(img, 0, 0);
+                showImageSize();
                 image = img;
                 document.querySelector("#image-upload-web").value = "";
             };
@@ -30,12 +42,32 @@ function webUpload(e) {
     resetAllEditControlsValues();
     const webLink = document.querySelector('#image-upload-web').value;
     const img = new Image();
-    img.src = webLink;
+    toDataURL(webLink, (dataUrl) => img.src = dataUrl);
     img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
         ctx.drawImage(img, 0, 0);
+        showImageSize();
         image = img;
         fileUploadLocal.value = "";
     }
+}
+
+
+function toDataURL(url, callback){
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('get', url);
+    xhr.responseType = 'blob';
+    xhr.onload = function(){
+      let fr = new FileReader();
+    
+      fr.onload = function(){
+        callback(this.result);
+      };
+    
+      fr.readAsDataURL(xhr.response); // async call
+    };
+
+    xhr.send();
 }
