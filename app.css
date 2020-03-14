@@ -8,7 +8,7 @@ body {
                     rgba(179, 48, 8, 0.3)
                     );
     text-align: center;
-    padding: 0 5%;
+    padding: 0 2%;
     font-family: 'BenchNine', sans-serif;
     overflow: hidden;
 }
@@ -55,7 +55,6 @@ main {
     overflow: hidden;
     color: rgb(231, 230, 230);
     font-size: 1em;
-    margin-top: 20px;
     background:  url('static/carbn_rect.png');
     background-size: initial;
 }
@@ -101,7 +100,7 @@ input, button {
 
 input[type=file],
 input[type=url] {
-    max-width: 280px;
+    max-width: 310px;
     padding: 10px 10px;
     border: red 1px solid;
     border-radius: 5px;  
@@ -119,6 +118,7 @@ input[type=url] {
     color: rgb(22, 190, 190);   
     font-size: 1.4rem;
     font-weight: bold;
+    margin: .4rem 0;
 }
 
 #edit-zone a {
@@ -145,7 +145,15 @@ input[type=url] {
 
 fieldset {
     border: none;
+    margin: 0;
+    padding: 0;
+    width: 80px;
+    display: inline-block;
 }
+
+/* input[type=range] {
+    width: 100%;
+} */
 
 #save-btn {
     height: 10%;
@@ -161,9 +169,13 @@ fieldset {
 }
 
 .gallery {
-    padding: 2%;
+    padding: 0% 2%;
     font-family: 'Sigmar One', cursive;
 }
+
+/* .gallery h1 {
+    margin: 0;
+} */
 
 .gallery-item {
     margin: 50px 10px 10px 10px;
@@ -206,8 +218,16 @@ fieldset {
     position: relative;
 }
 
+.mr-2 {
+    margin-right: 10px;
+}
+
 .mr-3 {
     margin-right: 15px;
+}
+
+.mr-3-1 {
+    margin-right: 16px;
 }
 
 .mt-5 {
@@ -222,13 +242,15 @@ fieldset {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 960px) {
+@media only screen and (max-width: 994px) {
     body {
         padding: 0;
+        padding-bottom: 2em;
     }
 
     main {
         font-size: smaller;
+        height: 100vh;
     }
 
     #upload-form label {
@@ -253,7 +275,7 @@ fieldset {
     }
 
     input[type=range] {
-        max-width: 50px;
+        max-width: 100px;
     }
 
     main button {
@@ -266,10 +288,15 @@ fieldset {
     }
 } 
 
-@media only screen and (min-width: 961px) and
+@media only screen and (min-width: 995px) and
 (max-width: 1079px) {
     body {
         padding: 0;
+        padding-bottom: 2em;
+    }
+
+    main {
+        height: 97vh;
     }
 
     #upload-form label {
@@ -282,7 +309,7 @@ fieldset {
     }
 
     input[type=range] {
-        max-width: 80px;
+        max-width: 140px;
     }
 
     button {
@@ -302,6 +329,11 @@ fieldset {
 (max-width: 1383px) {
     body {
         padding: 0;
+        padding-bottom: 2em;
+    }
+
+    main {
+        height: 95vh;
     }
 
     #upload-form label {
@@ -309,12 +341,12 @@ fieldset {
         margin-right: 1.2em;
     }
 
-    #zoom-img button {
-        padding: 15px;
+    input[type=range] {
+        max-width: 160px;
     }
 
-    input[type=range] {
-        max-width: 100px;
+    #zoom-img button {
+        padding: 15px;
     }
 
     button {
@@ -327,5 +359,19 @@ fieldset {
 
     .tiny {
         font-size: smaller;
+    }
+}
+
+@media only screen and (min-width: 1384px) and
+(max-width: 1500px) {
+    body {
+        padding: 0;
+        padding-bottom: 2em;
+    }
+}
+
+@media only screen and (min-width: 1501px) {
+    main {
+        margin-top: 20px;
     }
 }

@@ -44,7 +44,7 @@
 
                 <div id="zoom-img" class="flex-std-col edit-detail-1">
                     <div class="width-100">
-                        <p id="zoom-label">Zoom:</p>
+                        <p id="zoom-label">Zoom</p>
                         <div id="zoom-form" class="flex-std width-100">                    
                             <img id="zoom-in" class="mr-3 cursor-p" src="static/zoom-in.png" width="30px" height="30px"></img>
                             <img id="zoom-out" class="mr-3 cursor-p" src="static/zoom-out.png" width="30px" height="30px"></img>
@@ -54,24 +54,29 @@
 
                 <div id="crop-img" class="flex-std-col edit-detail-1">
                     <div class="width-100">
-                        <p>Crop:</p>
+                        <p>Crop</p>
                         <div class="flex-std width-100">
 
-                            <div id="crop-label" class="flex-std-col inline-block edit-label-1">
+                            <!-- <div id="crop-label" class="flex-std-col inline-block edit-label-1">
                                 <div for="crop-top">Top</div>
                                 <div for="crop-bottom">Bottom</div>
                                 <div for="crop-left">Left</div>
                                 <div for="crop-right">Right</div>
-                            </div>
+                            </div> -->
                             
                             <fieldset id="crop-form">
+                                    <label>Top </label>
                                     <input type="range" id="crop-top" name="crop-top" min="0" max="80" value="0">
-                                <br>
+                                    
+                                    <label>Bottom</label>
                                     <input type="range" id="crop-bottom" name="crop-bottom" min="0" max="80" value="0">
-                                <br>
+                                    
+                                    <label>Left </label>
                                     <input type="range" id="crop-left" name="crop-left" min="0" max="80" value="0">
-                                <br>
-                                    <input type="range" id="crop-right" name="crop-right" min="0" max="80" value="0">                          
+                                    
+                                    <label>Right</label>
+                                    <input type="range" id="crop-right" name="crop-right" min="0" max="80" value="0"> 
+                                                             
                             </fieldset>
             
                         </div>
@@ -81,17 +86,19 @@
                 
                 <div id="scale-img" class="flex-std-col edit-detail-1">
                     <div class="width-100">
-                        <p>Scale:</p>
+                        <p>Scale</p>
                         <div class="flex-std width-100">
 
-                            <div id="scale-label" class="flex-std-col inline-block edit-label-1">
+                            <!-- <div id="scale-label" class="flex-std-col inline-block edit-label-1">
                                 <div for="scale-x">Scale X</div>
                                 <div for="scale-y">Scale Y</div>
-                            </div>
+                            </div> -->
                             
                             <fieldset id="scale-form">
+                                    <label class="mr-3-1">Scale X</label>
                                     <input type="range" id="scale-x" name="scale-x" min="1" max="200" value="100">
-                                <br>
+
+                                    <label class="mr-3">Scale Y</label>
                                     <input type="range" id="scale-y" name="scale-y" min="1" max="200" value="100">                         
                             </fieldset>
             
@@ -102,17 +109,20 @@
                 
                 <div id="overlay-filter" class="flex-std-col edit-detail-1">
                     <div class="width-100">
-                        <p>Overlay:</p>
+                        <p>Overlay</p>
                         <div class="flex-std width-100">
 
-                            <div id="overlay-label" class="flex-std-col inline-block edit-label-1">
+                            <!-- <div id="overlay-label" class="flex-std-col inline-block edit-label-1">
                                 <div>Color</div>
                                 <div>Opacity</div>
-                            </div>
+                            </div> -->
                             
                             <fieldset id="filter-form">
+                                    <label>Color</label>
+                                    <br>
                                     <input type="color" id="overlay-color" name="overlay-color">
-                                <br>
+                                    <br>
+                                    <label>Opacity</label>
                                     <input type="range" id="overlay-opacity" name="overlay-opacity" min="0" max="100" value="0">                         
                             </fieldset>
                         </div>
@@ -121,7 +131,7 @@
                 
                 <div id="overlay-text" class="flex-std-col edit-detail-1">
                     <div class="width-100">
-                        <p>Text Area 1:</p>
+                        <p>Text Area 1</p>
                         <div class="flex-std width-100">                  
                             <fieldset id="text-form-1">
                                     <input type="text" id="overlay-text-1" name="overlay-text-1"
@@ -137,7 +147,7 @@
                             </fieldset>
                         </div>
                         
-                        <p>Text Area 2:</p>
+                        <p>Text Area 2</p>
                         <div class="flex-std width-100">                  
                             <fieldset id="text-form-2">
                                     <input type="text" id="overlay-text-2" name="overlay-text-2"

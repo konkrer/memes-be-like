@@ -2,7 +2,7 @@
 
 
 // display image variables
-const fileUploadLocal  = document.querySelector('#image-upload-local');
+const fileUploadLocal = document.querySelector('#image-upload-local');
 const fileUploadForm = document.querySelector('#upload-form');
 let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext("2d");
@@ -24,7 +24,8 @@ const textAreas = document.querySelector('#overlay-text');
 
 
 // editing event listeners
-editZone.addEventListener('mousewheel', mouseAdjust);
+const mousewheelevt = (/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
+editZone.addEventListener(mousewheelevt, mouseAdjust);
 zoomBtns.addEventListener('click', zoomImg);
 cropSliders.addEventListener('change', cropImg);
 scaleSliders.addEventListener('change', scaleImg);
@@ -37,7 +38,7 @@ textAreas.addEventListener('change', paintImage);
 document.querySelector('header button').addEventListener('click', startInit);
 
 // zoom main event listener
-document.querySelector('#canvas-wrapper').addEventListener('mousewheel', zoomMain);
+document.querySelector('#canvas-wrapper').addEventListener(mousewheelevt, zoomMain);
 
 // Save meme event listener
 document.querySelector('#save-btn button').addEventListener('click', saveMeme);
@@ -85,6 +86,7 @@ function paintImage() {
 
 // allow mousewhell events in canvas wrapper to change zoom level
 function zoomMain(e) {
+    console.log(e)
     e.preventDefault();
     zoomImg(changeIdForZoom(e));
 }
@@ -125,7 +127,7 @@ function mouseAdjust(e) {
 // change id to zoom-in or zoom-out on dummy e object
 // allowing zoomImg to function with mousewheel scroll events
 function changeIdForZoom(e) {
-    if (+e.wheelDeltaY < 0) {
+    if ((e.wheelDeltaY && +e.wheelDeltaY < 0) || (e.detail && +e.detail > 0)) {
         e = {target: {id: 'zoom-in'}};
     }else e = {target: {id: 'zoom-out'}};
     return e;
@@ -134,7 +136,7 @@ function changeIdForZoom(e) {
 
 // use mousewheel events to change slider values
 function mouseChangeSliderValue(e) {
-    if (+e.wheelDeltaY < 0) {
+    if ((e.wheelDeltaY && +e.wheelDeltaY < 0) || (e.detail && +e.detail > 0)) {
         e.target.value = +e.target.value + 1;
     }else e.target.value = +e.target.value - 1;
     return e;
