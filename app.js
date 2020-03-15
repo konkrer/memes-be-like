@@ -45,7 +45,7 @@ setTimeout(() => {
 // start button function -
 // slide header off screen and change overflow to auto after slide up complete
 function startInit(e) {
-    const header = e.target.parentElement;
+    const header = e.target.parentElement.parentElement;
     header.classList.add('hide-up');
     document.querySelector('main').classList.remove('display-none');
     setTimeout(() => {
@@ -68,16 +68,20 @@ function paintImage() {
         canvas.height = sHeight * currCanvasSizeBase[1] * scaleFactors[1];
         ctx.drawImage(image, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
 
-        changeborder();
         changeOverlayFilter();
         changeOverlayText();
+        changeborder();
         showImageSize();
 }
 
 // draw image border if input checked
 function changeborder() {
     const imageBorder = document.getElementById('border').checked;
-    if (imageBorder) ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    if (imageBorder) {
+        const color = document.getElementById('border-color').value;
+        ctx.strokeStyle = color;
+        ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    }
     localStorage.setItem('imageBorder', imageBorder);
 }
 
@@ -343,28 +347,7 @@ function saveMeme(e) {
         gallery.classList.remove('display-none');
         document.body.style.paddingBottom = "3em";
     }
-    canvas.classList.toggle('fliped');
-    setTimeout(() => {
-        const timerId = setInterval(() => {
-            canvas.classList.toggle('grow');
-        }, 200);
-        setTimeout(() => {
-            clearInterval(timerId);
-        }, 1250);
-    }, 2020);
-
-}
-
-
-// factory function for remove button
-function createDeleteBtn() {
-    const btn = document.createElement('button');
-    btn.innerText = 'Remove this meme';
-    btn.addEventListener('click', (e) => {
-        e.target.previousElementSibling.remove();
-        e.target.remove();
-    });
-    return btn;
+    animateCanvasSave();
 }
 
 

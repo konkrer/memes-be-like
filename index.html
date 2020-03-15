@@ -17,7 +17,10 @@
     
     <header class="flex-std-col hidden">
         <h1>Memes be like...</h1>
-        <button>Make memes</button>
+        <div class="flex-std btn-box">
+            <button>Make memes</button>
+        </div>
+        
     </header>
 
     <main class="display-none">
@@ -34,7 +37,7 @@
                     <label for="image-upload-web">Web Link
                         <input type="url" id="image-upload-web" name="image-upload-web">
                     </label>
-                    <button type="submit">Upload</button>
+                    <button type="submit">Upload/Reset</button>
                 </div>
             </form>
         </section>
@@ -62,25 +65,27 @@
                                     placeholder="This meme...">This Meme...</textarea><br>
                                     <div class="inline-block">
                                         <label for="text-1-color" class="">Color</label><br>
-                                        <input type="color" id="text-1-color" name="text-1-color" class="mr-3">
+                                            <input type="color" id="text-1-color" name="text-1-color" 
+                                            class="mr-3">
                                     </div>
                                     <div class="inline-block">
                                         <label for="text-1-stroke-color" class="">Outline</label><br>
-                                        <input type="color" id="text-1-stroke-color" name="text-1-stroke-color" value="#FFFFFF">
-                                        <input type="checkbox" id="text-1-outline" checked>
+                                            <input type="color" id="text-1-stroke-color" 
+                                            name="text-1-stroke-color" value="#FFFFFF">
+                                            <input type="checkbox" id="text-1-outline" checked>
                                     </div>
                                     <br>
                                     <label for="text1-margin">Top Margin</label>
                                     <br>
-                                    <input type="range" id="text1-margin" name="text1-margin"
-                                    min="0" max="95" value="12">
+                                        <input type="range" id="text1-margin" name="text1-margin"
+                                        min="0" max="95" value="30">
                                     <br>
                                     <label for="text1-align">Alignment</label>
-                                    <select id="text1-align" name="text1-align">
-                                        <option value="center">Center</option>
-                                        <option value="left">Left</option>
-                                        <option value="right">Right</option>
-                                    </select>               
+                                        <select id="text1-align" name="text1-align">
+                                            <option value="center">Center</option>
+                                            <option value="left">Left</option>
+                                            <option value="right">Right</option>
+                                        </select>               
                             </fieldset>
                         </div>
                         <br>
@@ -92,25 +97,27 @@
                                     <br>
                                     <div class="inline-block">
                                         <label for="text-2-color" class="">Color</label><br>
-                                        <input type="color" id="text-2-color" name="text-2-color" class="mr-3">
+                                            <input type="color" id="text-2-color" name="text-2-color" 
+                                            class="mr-3">
                                     </div>
                                     <div class="inline-block">
                                         <label for="text-2-stroke-color" class="">Outline</label><br>
-                                        <input type="color" id="text-2-stroke-color" name="text-2-stroke-color" value="#FFFFFF">
-                                        <input type="checkbox" id="text-2-outline" checked>
+                                            <input type="color" id="text-2-stroke-color" 
+                                            name="text-2-stroke-color" value="#FFFFFF">
+                                            <input type="checkbox" id="text-2-outline" checked>
                                     </div>
                                     <br>
                                     <label for="text2-margin">Bottom Margin</label>
                                     <br>
-                                    <input type="range" id="text2-margin" name="text2-margin"
+                                        <input type="range" id="text2-margin" name="text2-margin"
                                     min="0" max="95" value="30">
                                     <br>
                                     <label for="text2-align">Alignment</label>
-                                    <select id="text2-align" name="text2-align">
-                                        <option value="center">Center</option>
-                                        <option value="left">Left</option>
-                                        <option value="right">Right</option>
-                                    </select>            
+                                        <select id="text2-align" name="text2-align">
+                                            <option value="center">Center</option>
+                                            <option value="left">Left</option>
+                                            <option value="right">Right</option>
+                                        </select>            
                             </fieldset>
                         </div>
                         <br>
@@ -119,20 +126,20 @@
                             <fieldset id="font-form">
                                     <label for="font-size">Font Size</label>
                                     <br>
-                                    <input type="range" id="font-size" name="font-size"
-                                    min="8" max="180" value="60">
+                                        <input type="range" id="font-size" name="font-size"
+                                        min="8" max="180" value="60">
                                     <br>
                                     <label for="line-height">Line Height</label>
                                     <br>
-                                    <input type="range" id="line-height" name="line-height"
-                                    min="50" max="200" value="100">
+                                        <input type="range" id="line-height" name="line-height"
+                                        min="50" max="200" value="100">
                                     <br>
                                     <label for="font-select">Font</label>
-                                    <select id="font-select" name="font-select">
-                                        <option value="Bangers">Bangers</option>
-                                        <option value="ariel">Ariel</option>
-                                        <option value="monospace">Monospace</option>
-                                    </select>            
+                                        <select id="font-select" name="font-select">
+                                            <option value="Bangers">Bangers</option>
+                                            <option value="ariel">Ariel</option>
+                                            <option value="monospace">Monospace</option>
+                                        </select>            
                             </fieldset>
                         </div>
 
@@ -145,16 +152,20 @@
                         <p>Overlay</p>
                             
                             <fieldset id="filter-form">
-                                    <label>Color</label>
+                                    <label for="overlay-color">Color</label>
                                     <br>
-                                    <input type="color" id="overlay-color" name="overlay-color">
+                                       <input type="color" id="overlay-color" name="overlay-color">
                                     <br>
-                                    <label>Opacity</label>
-                                    <input type="range" id="overlay-opacity" name="overlay-opacity" min="0" max="100" value="0">                         
+                                    <label for="overlay-opacity">Opacity</label>
+                                        <input type="range" id="overlay-opacity" name="overlay-opacity" 
+                                        min="0" max="100" value="0">                         
                                     <br>
-                                    <label for="border">Image border</label>
-                                    <input type="checkbox" name="border" id="border" checked>
-                            </fieldset>
+                                    <label for="border">Image Border</label>
+                                        <input type="checkbox" name="border" id="border" checked>
+                                    <br>
+                                    <label for="border-color">Border Color</label>
+                                        <input type="color" id="border-color" name="border-color">                         
+                                </fieldset>
                         <!-- </div> -->
                     </div>
                 </div>
@@ -167,19 +178,23 @@
                             <fieldset id="crop-form">
                                     <label for="crop-top">Top </label>
                                     <br>
-                                    <input type="range" id="crop-top" name="crop-top" min="0" max="80" value="0">
+                                        <input type="range" id="crop-top" name="crop-top" min="0" 
+                                        max="80" value="0">
                                     <br>
                                     <label for="crop-bottom">Bottom</label>
                                     <br>
-                                    <input type="range" id="crop-bottom" name="crop-bottom" min="0" max="80" value="0">
+                                        <input type="range" id="crop-bottom" name="crop-bottom" min="0" 
+                                        max="80" value="0">
                                     <br>
                                     <label for="crop-left">Left </label>
                                     <br>
-                                    <input type="range" id="crop-left" name="crop-left" min="0" max="80" value="0">
+                                        <input type="range" id="crop-left" name="crop-left" min="0" 
+                                        max="80" value="0">
                                     <br>
                                     <label for="crop-right">Right</label>
                                     <br>
-                                    <input type="range" id="crop-right" name="crop-right" min="0" max="80" value="0"> 
+                                        <input type="range" id="crop-right" name="crop-right" min="0" 
+                                        max="80" value="0"> 
                                                              
                             </fieldset>
             
@@ -193,10 +208,12 @@
                             
                             <fieldset id="scale-form">
                                     <label class="mr-3-1">Scale X</label><br>
-                                    <input type="range" id="scale-x" name="scale-x" min="1" max="200" value="100">
+                                        <input type="range" id="scale-x" name="scale-x" min="1" 
+                                        max="200" value="100">
 
                                     <label class="mr-3">Scale Y</label><br>
-                                    <input type="range" id="scale-y" name="scale-y" min="1" max="200" value="100">                         
+                                        <input type="range" id="scale-y" name="scale-y" min="1" 
+                                        max="200" value="100">                         
                             </fieldset>
             
                         <a href="#" id="reset-scale" class="tiny">Reset</a>
@@ -218,12 +235,16 @@
                                 </thead>
                                 <tbody class="text-black">
                                     <tr>
-                                        <td><div id="current-size" class="small-info-box"></div></td>
+                                        <td>
+                                            <div id="current-size" class="small-info-box"></div>
+                                        </td>
                                         <td>
                                             <input type="number" id="output-scale" name="output-scale" 
                                             min=".1" max="3" step=".1" value="1">
                                         </td>
-                                        <td><div id="output-size" class="small-info-box"></div></td>
+                                        <td>
+                                            <div id="output-size" class="small-info-box"></div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -62,4 +62,30 @@ function checkLocalStorage() {
     }
 }
 
+function animateCanvasSave() {
+    canvas.classList.toggle('fliped');
+    setTimeout(() => {
+        canvas.classList.toggle('skew');
+        setTimeout(() => {
+            canvas.classList.toggle('skew');
+        }, 1300);
+    }, 1500);
+}
+
+// factory function for remove button
+function createDeleteBtn() {
+    const btn = document.createElement('button');
+    btn.innerText = 'Remove this meme';
+    btn.addEventListener('click', (e) => {
+        e.target.previousElementSibling.remove();
+        e.target.remove();
+    });
+    return btn;
+}
+
+function removeDefaultText() {
+    document.getElementById('overlay-text-1').innerText = '';
+    document.getElementById('overlay-text-2').innerText = '';
+}
+
 checkLocalStorage();

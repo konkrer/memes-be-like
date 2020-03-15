@@ -16,6 +16,7 @@ fileUploadForm.addEventListener('submit', webUpload);
 // https://stackoverflow.com/a/42614316
 function readImage() {
     resetAllEditControlsValues();
+    removeDefaultText();
     if ( this.files && this.files[0] ) {
         // was not familiar with FileReader or creating Image objects like this
         const FR= new FileReader();
@@ -39,10 +40,15 @@ function readImage() {
 function webUpload(e, link) {
     e.preventDefault();
     resetAllEditControlsValues();
-    
-    const webLink = link || document.querySelector('#image-upload-web').value;
-    if (!webLink) return;
+    if (!link) removeDefaultText();
 
+    const webLink = link || document.querySelector('#image-upload-web').value;
+    // if blank set default prefrences and paint last image
+    if (!webLink) {
+        checkLocalStorage();
+        paintImage();
+        return;
+    }
     const img = new Image();
     toDataURL(webLink, (dataUrl) => img.src = dataUrl);
     img.onload = () => {
