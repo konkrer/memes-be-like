@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    /* border: red 1px dashed; */
 }
 
 body {
@@ -50,7 +51,10 @@ header button:hover {
 
 .btn-box {
     height: 150px;
-    /* width: 100%; */
+}
+
+.btn-box-2 {
+    height: 60px;
 }
 
 .hide-up {
@@ -63,11 +67,11 @@ main {
     border-radius: 10px;
     height: 90vh;
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
-    grid-template-rows: 1fr 10fr;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr 20fr;
     grid-template-areas: 
-        "edit header header "
-        "edit image image";
+        "edit header "
+        "edit image";
     overflow: hidden;
     color: rgb(231, 230, 230);
     font-size: 1em;
@@ -80,7 +84,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: .5em;
+    padding: .1em .5em;
     grid-area: header;
     background-position: left;
 }
@@ -115,14 +119,19 @@ main button,
     padding: 10px 30px;
     font-family: 'Bangers';
     font-size: 1.2rem;
-    transition: transform 300ms;
+    transition: all 300ms;
+}
+
+main button:hover,
+.gallery button:hover {
+    transform: scale(1.1);
+    box-shadow: black 4px 4px 4px;
+    font-size: 1.25rem;
 }
 
 button:hover {
     background-color: red;
     color: yellow;
-    transform: scale(1.1);
-    box-shadow: black 4px 4px 4px;
 }
 
 input, button, 

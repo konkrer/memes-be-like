@@ -25,7 +25,7 @@
 
     <main class="display-none">
         <section id="upload-zone">
-            <form action="" enctype="multipart/form-data" id="upload-form">
+            <form action="" enctype="multipart/form-data" id="upload-form" class="width-100 flex-std">
                 <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
                 <div class="inline-block">
                     <label for="image-upload">File Upload
@@ -36,9 +36,11 @@
                 <div class="inline-block">
                     <label for="image-upload-web">Web Link
                         <input type="url" id="image-upload-web" name="image-upload-web">
-                    </label>
-                    <button type="submit">Upload/Reset</button>
+                    </label>      
                 </div>
+                <div class="inline-block" style="width:130px;">
+                    <button type="submit">Upload/Reset</button>
+                </div> 
             </form>
         </section>
 
