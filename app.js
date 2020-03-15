@@ -38,6 +38,7 @@ document.querySelector('#save-btn button').addEventListener('click', saveMeme);
 // Fade in
 setTimeout(() => {
     document.querySelector('header').classList.remove('hidden');
+    insertDefaultImage();
 }, 200);
 
 
@@ -66,10 +67,18 @@ function paintImage() {
         canvas.width = sWidth * currCanvasSizeBase[0] * scaleFactors[0];
         canvas.height = sHeight * currCanvasSizeBase[1] * scaleFactors[1];
         ctx.drawImage(image, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
-        showImageSize();
 
+        changeborder();
         changeOverlayFilter();
         changeOverlayText();
+        showImageSize();
+}
+
+// draw image border if input checked
+function changeborder() {
+    const imageBorder = document.getElementById('border').checked;
+    if (imageBorder) ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    localStorage.setItem('imageBorder', imageBorder);
 }
 
 
@@ -124,8 +133,17 @@ function sliderSwitch(e) {
         case 'filter-form':
             paintImage();
             break;
+        case 'font-form':
+            paintImage();
+            break;
+        case 'text-form-1':
+            paintImage();
+            break;
+        case 'text-form-2':
+            paintImage();
+            break;
         default:
-            console.error("bad mouse wheel flag");
+            console.error("bad mouse wheel flag", parentId);
             break;
     }
 }
@@ -256,20 +274,46 @@ function changeOverlayFilter(e) {
 
 
 function changeOverlayText(e) {
-    ctx.font = '80px Bangers';
-    ctx.textAlign = 'center';
-    
-    const text1 = document.querySelector('#overlay-text-1').value;
+    let {
+        font, fontSize, lineHeight, topMargin, 
+        textAlignTop, textAlignBottom, xStartTop, 
+        xStartBotm, textArray1, textArray2, bOffset,
+    } = getTextVaribles();
+
+    ctx.font = `${fontSize}px ${font}`;
+   
+    // text area 1
+    ctx.textAlign = textAlignTop;
     ctx.fillStyle = document.querySelector('#text-1-color').value;
-    ctx.strokeStyle = document.querySelector('#text-1-stroke-color').value;
-    ctx.fillText(text1, canvas.width/2, 100, canvas.width);
-    ctx.strokeText(text1, canvas.width/2, 100, canvas.width);
-    
-    const text2 = document.querySelector('#overlay-text-2').value;
+    const text1StrokeColor = document.querySelector('#text-1-stroke-color');
+    ctx.strokeStyle = text1StrokeColor.value;
+    const text1Stroke = text1StrokeColor.nextElementSibling.checked;
+    localStorage.setItem('text1Stroke', text1Stroke);
+
+    let offset = 0;
+    textArray1.forEach(line => {
+        ctx.fillText(line, xStartTop, topMargin + .76*fontSize + offset, canvas.width);
+        if (text1Stroke) ctx.strokeText(
+            line, xStartTop, topMargin + .76*fontSize + offset, canvas.width
+            );
+        offset += lineHeight;
+    })
+
+    // text area 2 
+    ctx.textAlign = textAlignBottom;
     ctx.fillStyle = document.querySelector('#text-2-color').value;
-    ctx.strokeStyle = document.querySelector('#text-2-stroke-color').value;
-    ctx.fillText(text2, canvas.width/2, canvas.height - 50, canvas.width);
-    ctx.strokeText(text2, canvas.width/2, canvas.height - 50, canvas.width);
+    const text2StrokeColor = document.querySelector('#text-2-stroke-color');
+    ctx.strokeStyle = text2StrokeColor.value;
+    const text2Stroke = text2StrokeColor.nextElementSibling.checked;
+    localStorage.setItem('text2Stroke', text2Stroke);
+
+    textArray2.forEach(line => {
+        ctx.fillText(line, xStartBotm, canvas.height - bOffset, canvas.width);
+        if (text2Stroke) ctx.strokeText(
+            line, xStartBotm, canvas.height - bOffset, canvas.width
+            );
+        bOffset -= lineHeight;
+    })
 }
 
 
@@ -298,7 +342,17 @@ function saveMeme(e) {
         // don't actually NEED to do this each time
         gallery.classList.remove('display-none');
         document.body.style.paddingBottom = "3em";
-    }      
+    }
+    canvas.classList.toggle('fliped');
+    setTimeout(() => {
+        const timerId = setInterval(() => {
+            canvas.classList.toggle('grow');
+        }, 200);
+        setTimeout(() => {
+            clearInterval(timerId);
+        }, 1250);
+    }, 2020);
+
 }
 
 
@@ -329,14 +383,11 @@ function resetImgScale() {
 }
 
 
-// // insert text after meme saved showing user how to reload image
-// function insertDefaultText() {
-//     ctx.font = '30px BenchNine';
-//     ctx.textAlign = 'center';
-//     ctx.fillText('Mouse Scroll Here', canvas.width/2, 36, canvas.width);
-//     ctx.fillText('To Reload Last Image', canvas.width/2, canvas.height - 18, canvas.width);
-//     ctx.strokeRect(0, 0, canvas.width, canvas.height);
-// }
+// insert default image
+function insertDefaultImage() {
+    const URL = "https://3.bp.blogspot.com/_57XeKo2AVGk/TNfvV8CmamI/AAAAAAAADds/zG9SGr3Dv9s/s1600/The_Riddler_3%5B1%5D.png"
+    webUpload({preventDefault: () => {}}, URL);   
+}
 
 
 // helper function from S.O. https://stackoverflow.com/a/21648508/11164558

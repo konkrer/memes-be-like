@@ -26,9 +26,8 @@ function readImage() {
             img.onload = function() {
                 canvas.width = img.naturalWidth;
                 canvas.height = img.naturalHeight;
-                ctx.drawImage(img, 0, 0);
-                showImageSize();
                 image = img;
+                paintImage();
                 document.querySelector("#image-upload-web").value = "";
             };
         };       
@@ -37,18 +36,20 @@ function readImage() {
 }
 
 
-function webUpload(e) {
+function webUpload(e, link) {
     e.preventDefault();
     resetAllEditControlsValues();
-    const webLink = document.querySelector('#image-upload-web').value;
+    
+    const webLink = link || document.querySelector('#image-upload-web').value;
+    if (!webLink) return;
+
     const img = new Image();
     toDataURL(webLink, (dataUrl) => img.src = dataUrl);
     img.onload = () => {
         canvas.width = img.naturalWidth;
         canvas.height = img.naturalHeight;
-        ctx.drawImage(img, 0, 0);
-        showImageSize();
         image = img;
+        paintImage();
         fileUploadLocal.value = "";
     }
 }

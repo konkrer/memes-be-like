@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Bangers|BenchNine|Sigmar+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="app.css">
     <script defer src="modules/fileUpload.js" type="text/javascript"></script>
+    <script defer src="modules/helperFunction.js" type="text/javascript"></script>
     <script defer src="app.js" type="text/javascript"></script>
     <title>Memes be like...</title>
 </head>
@@ -57,8 +58,8 @@
                         <p>Text Area 1</p>
                         <div class="flex-std width-100">                  
                             <fieldset id="text-form-1">
-                                    <input type="text" id="overlay-text-1" name="overlay-text-1"
-                                    placeholder="This meme..."><br>
+                                    <textarea id="overlay-text-1" name="overlay-text-1"
+                                    placeholder="This meme...">This Meme...</textarea><br>
                                     <div class="inline-block">
                                         <label for="text-1-color" class="">Color</label><br>
                                         <input type="color" id="text-1-color" name="text-1-color" class="mr-3">
@@ -66,25 +67,76 @@
                                     <div class="inline-block">
                                         <label for="text-1-stroke-color" class="">Outline</label><br>
                                         <input type="color" id="text-1-stroke-color" name="text-1-stroke-color" value="#FFFFFF">
-                                    </div>                    
+                                        <input type="checkbox" id="text-1-outline" checked>
+                                    </div>
+                                    <br>
+                                    <label for="text1-margin">Top Margin</label>
+                                    <br>
+                                    <input type="range" id="text1-margin" name="text1-margin"
+                                    min="0" max="95" value="12">
+                                    <br>
+                                    <label for="text1-align">Alignment</label>
+                                    <select id="text1-align" name="text1-align">
+                                        <option value="center">Center</option>
+                                        <option value="left">Left</option>
+                                        <option value="right">Right</option>
+                                    </select>               
                             </fieldset>
                         </div>
-                        
+                        <br>
                         <p>Text Area 2</p>
                         <div class="flex-std width-100">                  
                             <fieldset id="text-form-2">
-                                    <input type="text" id="overlay-text-2" name="overlay-text-2"
-                                    placeholder="is the memeiest -_-"><br>
+                                    <textarea id="overlay-text-2" name="overlay-text-2"
+                                    placeholder="is the memeiest -_-">Is The Memeiest!!!</textarea>
+                                    <br>
                                     <div class="inline-block">
                                         <label for="text-2-color" class="">Color</label><br>
                                         <input type="color" id="text-2-color" name="text-2-color" class="mr-3">
                                     </div>
                                     <div class="inline-block">
                                         <label for="text-2-stroke-color" class="">Outline</label><br>
-                                        <input type="color" id="text-2-stroke-color" name="text-2-stroke-color" value="#FFFFFF">   
-                                    </div>                 
+                                        <input type="color" id="text-2-stroke-color" name="text-2-stroke-color" value="#FFFFFF">
+                                        <input type="checkbox" id="text-2-outline" checked>
+                                    </div>
+                                    <br>
+                                    <label for="text2-margin">Bottom Margin</label>
+                                    <br>
+                                    <input type="range" id="text2-margin" name="text2-margin"
+                                    min="0" max="95" value="30">
+                                    <br>
+                                    <label for="text2-align">Alignment</label>
+                                    <select id="text2-align" name="text2-align">
+                                        <option value="center">Center</option>
+                                        <option value="left">Left</option>
+                                        <option value="right">Right</option>
+                                    </select>            
                             </fieldset>
                         </div>
+                        <br>
+                        <p>Font</p>
+                        <div class="flex-std width-100">                  
+                            <fieldset id="font-form">
+                                    <label for="font-size">Font Size</label>
+                                    <br>
+                                    <input type="range" id="font-size" name="font-size"
+                                    min="8" max="180" value="60">
+                                    <br>
+                                    <label for="line-height">Line Height</label>
+                                    <br>
+                                    <input type="range" id="line-height" name="line-height"
+                                    min="50" max="200" value="100">
+                                    <br>
+                                    <label for="font-select">Font</label>
+                                    <select id="font-select" name="font-select">
+                                        <option value="Bangers">Bangers</option>
+                                        <option value="ariel">Ariel</option>
+                                        <option value="monospace">Monospace</option>
+                                    </select>            
+                            </fieldset>
+                        </div>
+
+
                     </div>
                 </div>
 
@@ -99,6 +151,9 @@
                                     <br>
                                     <label>Opacity</label>
                                     <input type="range" id="overlay-opacity" name="overlay-opacity" min="0" max="100" value="0">                         
+                                    <br>
+                                    <label for="border">Image border</label>
+                                    <input type="checkbox" name="border" id="border" checked>
                             </fieldset>
                         <!-- </div> -->
                     </div>
