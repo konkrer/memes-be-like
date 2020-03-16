@@ -279,20 +279,21 @@ function changeOverlayFilter(e) {
 
 function changeOverlayText(e) {
     let {
+
         font, fontSize, lineHeight, topMargin, 
         textAlignTop, textAlignBottom, xStartTop, 
         xStartBotm, textArray1, textArray2, bOffset,
+        text1Color, text1StrokeColor, text1Stroke,
+        text2Color, text2StrokeColor, text2Stroke,
+
     } = getTextVaribles();
 
     ctx.font = `${fontSize}px ${font}`;
    
     // text area 1
     ctx.textAlign = textAlignTop;
-    ctx.fillStyle = document.querySelector('#text-1-color').value;
-    const text1StrokeColor = document.querySelector('#text-1-stroke-color');
+    ctx.fillStyle = text1Color;
     ctx.strokeStyle = text1StrokeColor.value;
-    const text1Stroke = text1StrokeColor.nextElementSibling.checked;
-    localStorage.setItem('text1Stroke', text1Stroke);
 
     let offset = 0;
     textArray1.forEach(line => {
@@ -305,11 +306,8 @@ function changeOverlayText(e) {
 
     // text area 2 
     ctx.textAlign = textAlignBottom;
-    ctx.fillStyle = document.querySelector('#text-2-color').value;
-    const text2StrokeColor = document.querySelector('#text-2-stroke-color');
+    ctx.fillStyle = text2Color;
     ctx.strokeStyle = text2StrokeColor.value;
-    const text2Stroke = text2StrokeColor.nextElementSibling.checked;
-    localStorage.setItem('text2Stroke', text2Stroke);
 
     textArray2.forEach(line => {
         ctx.fillText(line, xStartBotm, canvas.height - bOffset, canvas.width);
