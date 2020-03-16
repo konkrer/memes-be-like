@@ -173,7 +173,7 @@ textarea {
 }
 
 #edit-zone a {
-    color: rgb(226, 221, 221);
+    color: rgb(214, 200, 200);
     font-family: Arial, Helvetica, sans-serif;
     /* border: white 1px solid; */
     /* border-radius: 5px; */
@@ -181,12 +181,12 @@ textarea {
     margin: 5px 0;
 }
 
-#advanced-zone a {
-    font-weight: bold;
-}
-
 #edit-zone a:hover {
     color: rgb(40, 231, 59);
+}
+
+#advanced-zone a {
+    font-weight: bold;
 }
 
 .edit-detail-1 {
@@ -530,4 +530,69 @@ canvas {
         margin-top: 20px;
         height: 90vh;
     }
+}
+
+
+.abrilFF {
+    font-family: 'Abril Fatface';
+}
+.Alfa {
+    font-family: 'Alfa Slab One';
+}
+.Anton {
+    font-family: 'Anton';
+}
+.BalooC {
+    font-family: 'Baloo Chettan 2';
+}
+.Baloo {
+    font-family: 'Baloo 2';
+}
+.Bellota {
+    font-family: 'Bellota Text';
+}
+.Fredoka {
+    font-family: 'Fredoka One';
+}
+.Lato {
+    font-family: 'Lato';
+}
+.Lobster {
+    font-family: 'Lobster';
+}
+.Merriweather {
+    font-family: 'Merriweather';
+}
+.Montserrat {
+    font-family: 'Montserrat';
+}
+.Raleway {
+    font-family: 'Raleway';
+}
+.Righteous {
+    font-family: 'Righteous';
+}
+.Sigmar {
+    font-family: 'Sigmar One';
+}
+.Pacifico {
+    font-family: 'Pacifico';
+}
+.Poppins {
+    font-family: 'Poppins';
+}
+.RobotoM {
+    font-family: 'Roboto Mono';
+}
+.RobotoS {
+    font-family: 'Roboto Slab';
+}
+.Elite {
+    font-family: 'Special Elite';
+}
+.Ubuntu {
+    font-family: 'Ubuntu';
+}
+.Ultra {
+    font-family: 'Ultra';
 }
