@@ -23,16 +23,22 @@ body {
     overflow: hidden;
 }
 
-header {
-    font-size: 3em;
+#header-wrapper {
     height: 90vh;
+}
+
+header {
+    font-size: 3.7em;
+    /* height: 90vh; */
     font-family: 'Bangers', cursive;
     perspective: 600px;
-    transition: opacity 2s;
+    transition: transform 2s, opacity 3s;
+    transform: scale(.01);
 }
 
 header h1 {
-    transform: rotateX(35deg); 
+    transform: rotateX(35deg);
+    /* transform-style: preserve-3d; */
     letter-spacing: .1em;
     text-shadow: 1px 1px 1px red, 
                  -1px -1px 1px red, 
@@ -44,6 +50,11 @@ header h1 {
 
 header h1:hover {
     transform: scale(1.2);
+    text-shadow: 1px 1px 1px red, 
+                 -1px -1px 1px red, 
+                 -1px 1px 1px red, 
+                 1px -1px 1px red,
+                 10px 10px 8px black;
 }
 
 header button {
@@ -462,6 +473,9 @@ canvas {
 
 @media only screen and (min-width: 995px) and
 (max-width: 1079px) {
+    header {
+        font-size: 3em;
+    }
 
     main button,
     .gallery button {
@@ -496,6 +510,10 @@ canvas {
 
 @media only screen and (min-width: 1080px) and
 (max-width: 1383px) {
+
+    header {
+        font-size: 3.5em;
+    }
 
     #upload-form label {
         font-size: 1.4em;
@@ -559,6 +577,11 @@ canvas {
     }
 }
 
+@media only screen and (min-width: 2000px) {
+    header {
+        font-size: 5em;
+    }
+}
 
 .abrilFF {
     font-family: 'Abril Fatface';

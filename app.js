@@ -39,7 +39,9 @@ document.querySelector('#save-btn button').addEventListener('click', saveMeme);
 
 // Fade in
 setTimeout(() => {
-    document.querySelector('header').classList.remove('hidden');
+    const header = document.querySelector('header');
+    header.classList.remove('hidden');
+    header.style.transform = 'none';
     insertDefaultImage();
 }, 200);
 
@@ -47,13 +49,13 @@ setTimeout(() => {
 // start button function -
 // slide header off screen and change overflow to auto after slide up complete
 function startInit(e) {
-    const header = e.target.parentElement.parentElement;
-    header.classList.add('hide-up');
+    const headerWrapper = e.target.parentElement.parentElement.parentElement;
+    headerWrapper.classList.add('hide-up');
     document.querySelector('main').classList.remove('display-none');
     document.getElementById('font-hack').classList.add('display-none');
     setTimeout(() => {
         document.body.style.overflowY = 'auto';
-        header.classList.add('display-none');
+        headerWrapper.classList.add('display-none');
     }, 3000);
 }
 
