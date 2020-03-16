@@ -10,12 +10,14 @@ let outputScale = 1;
 
 
 // edit control variables
+const editForm = document.querySelector('#edit-form')
 const textAreas = document.querySelector('#overlay-text');
 const mousewheelevt = (/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
 
 
 // editing event listeners
-document.querySelector('#edit-form').addEventListener(mousewheelevt, mouseAdjust);
+editForm.addEventListener(mousewheelevt, mouseAdjust);
+editForm.addEventListener('submit', (e) => e.preventDefault());
 document.querySelector('#zoom-img').addEventListener('click', zoomImg);
 textAreas.addEventListener('keyup', paintImage);
 textAreas.addEventListener('change', paintImage);
@@ -321,6 +323,7 @@ function changeOverlayText(e) {
 
 
 function changeOutputScaleValue(e) {
+    e.preventDefault();
     let outScaleValue = e.target.value;
     if (outScaleValue > 3) outScaleValue = 3;
     else if (outScaleValue < 0.1) outScaleValue = 0.1;

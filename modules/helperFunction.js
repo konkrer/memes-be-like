@@ -220,7 +220,7 @@ function selectFontHtml() {
         option.removeAttribute('selected');
     });
     document.querySelector(
-        `#font-select option[value=${font}]`
+        `#font-select option[value="${font}"]`
         ).setAttribute('selected', true);
 }
 

@@ -25,7 +25,7 @@ body {
 
 header {
     font-size: 3em;
-    height: 80vh;
+    height: 90vh;
     font-family: 'Bangers', cursive;
     perspective: 600px;
     transition: opacity 2s;
@@ -68,7 +68,7 @@ header button:hover {
 }
 
 .hide-up {
-    margin-top: -80vh;
+    margin-top: -90vh;
     transition: margin-top 1.5s;
 }
 
@@ -213,6 +213,10 @@ fieldset {
     display: inline-block;
 }
 
+#font-select {
+    width: 80%;
+}
+
 input[type=range] {
     width: 100%;
 }
@@ -272,6 +276,7 @@ canvas {
     font-family: 'Bangers', cursive;
     font-size: xx-large;
     letter-spacing: .6rem;
+    overflow: hidden;
 }
 
 .gallery-item {
@@ -383,6 +388,18 @@ canvas {
     font-weight: normal;
 }
 
+@media only screen and (max-width: 774px) {
+    #output-scale-form {
+        font-size: 8px;
+    }
+
+    main button:hover {
+    transform: none;
+    font-size: 1rem;
+    }
+}
+
+
 @media only screen and (max-width: 994px) {
     header {
         font-size: xx-large;
@@ -394,6 +411,12 @@ canvas {
 
     .btn-box {
         height: 100px;
+    }
+
+    main button,
+    .gallery button {
+    padding: 2px 4px;
+    font-size: 1rem;
     }
 
     main {
@@ -427,40 +450,43 @@ canvas {
         margin: 3px;
     }
 
-    main button,
-    .gallery button {
-    padding: 2px 4px;
-    font-size: 1rem;
-    }
-
     .tiny {
         font-size: xx-small;
+    }
+
+    .edit-detail-1 > div {
+        padding: 5px 0;
+        margin: 5px 0;
     }
 } 
 
 @media only screen and (min-width: 995px) and
 (max-width: 1079px) {
 
+    main button,
+    .gallery button {
+        padding: 5px 15px;
+    }
+
     #upload-form label {
         font-size: 1.4em;
         margin-right: 1.1em;
-    }
-
-    #zoom-img button {
-        padding: 10px;
     }
 
     input[type=url] {
         padding: 3px 10px;
     }
 
-    main button,
-    .gallery button {
-        padding: 5px 15px;
+    #zoom-img button {
+        padding: 10px;
     }
 
     #edit-zone p {
         font-size: 1.2em;
+    }
+
+    #output-scale-form {
+        padding: 0 0;
     }
 
     .tiny {
@@ -489,6 +515,10 @@ canvas {
         padding: 5px 20px;
     }
 
+    #edit-zone {
+        padding: 0 15px;
+    }
+    
     #edit-zone p {
         font-size: 1.3em;
     }
@@ -497,9 +527,6 @@ canvas {
         font-size: x-small;
     }
 
-    #edit-zone {
-        padding: 0 15px;
-    }
 }
 
 
