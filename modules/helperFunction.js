@@ -244,7 +244,7 @@ function removeDefaultText() {
 function resetFormToDefault(e) {
     e.preventDefault();
     console.log(e)
-    const textData = {
+    let textData = {
             'fontSize': '60',
             'lineHeightFactor': '100',
             'topMarginFactor': '30',
@@ -259,6 +259,8 @@ function resetFormToDefault(e) {
             'text2Stroke': 'true',
     }
     setFromSessionStorageTextStyles(textData);
+    textData = JSON.stringify(textData);
+    sessionStorage.setItem('textData', textData);
 }
 
 
