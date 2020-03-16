@@ -10,6 +10,7 @@ let ctx = canvas.getContext("2d");
 // on local and web file input read data and load image to canvas
 fileUploadLocal.onchange = readImage;
 fileUploadForm.addEventListener('submit', webUpload);
+document.querySelector('#upload-form button').addEventListener('dblclick', resetFormToDefault);
 
 
 // this function copied from Stack Overflow for the most part
@@ -36,16 +37,15 @@ function readImage() {
     }
 }
 
-
+// for uploading web links to images. If blank works as reset.
 function webUpload(e, link) {
     e.preventDefault();
     resetAllEditControlsValues();
     if (!link) removeDefaultText();
 
     const webLink = link || document.querySelector('#image-upload-web').value;
-    // if blank set default prefrences and paint last image
+    // if blank paint last image
     if (!webLink) {
-        checkLocalStorage();
         paintImage();
         return;
     }
