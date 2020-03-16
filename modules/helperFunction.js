@@ -139,7 +139,7 @@ function checkSessionStorageText() {
 }
 
 // load text and border stroke defaults from localStorage
-function checkLocalStorageStroke() {
+function checkLocalStorage() {
     if (localStorage.getItem('font')) {
         document.querySelector(
             `#font-select option[value=${localStorage.getItem('font')}]`
@@ -187,4 +187,4 @@ function removeDefaultText() {
 }
 
 checkSessionStorageText();
-checkLocalStorageStroke();
+checkLocalStorage();
