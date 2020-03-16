@@ -48,6 +48,7 @@ function startInit(e) {
     const header = e.target.parentElement.parentElement;
     header.classList.add('hide-up');
     document.querySelector('main').classList.remove('display-none');
+    document.getElementById('font-hack').classList.add('display-none');
     setTimeout(() => {
         document.body.style.overflowY = 'auto';
         header.classList.add('display-none');
