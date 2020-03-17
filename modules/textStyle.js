@@ -1,5 +1,10 @@
 'use strict'
 
+/* text style DOM inputs*/
+const FONT_SIZE = document.getElementById('font-size');
+const LINE_HEIGHT = document.getElementById('line-height');
+const TOP_MARGIN = document.getElementById('text1-margin');
+const BOTTOM_MARGIN = document.getElementById('text2-margin');
 
 /* event listeners for setting local/session
 /* storage of text style and font choice*/
@@ -25,12 +30,12 @@ function setTextStyle(e) {
 function getTextVaribles() {  
     // get values from DOM
     // and calculate additional values as necessarry.
-    const fontSize = document.getElementById('font-size').value;
-    const lineHeightFactor = document.getElementById('line-height').value;
+    const fontSize = FONT_SIZE.value;
+    const lineHeightFactor = LINE_HEIGHT.value;
     const lineHeight = (lineHeightFactor / 100) * +fontSize;
   
-    const topMarginFactor = document.getElementById('text1-margin').value;
-    const bottomMarginFactor = document.getElementById('text2-margin').value;
+    const topMarginFactor = TOP_MARGIN.value;
+    const bottomMarginFactor = BOTTOM_MARGIN.value;
     const topMargin = lineHeight * (topMarginFactor / 100);
     const bottomMargin = lineHeight * (bottomMarginFactor / 100);
 
@@ -89,10 +94,41 @@ function getTextArrays() {
 /* different text alignments*/
 function getXStart(textAlign, margin) {
     let xStart;
-    if (textAlign=='right') xStart = canvas.width - margin - 10;
+    if (textAlign=='right') xStart = CANVAS.width - margin - 10;
     else if (textAlign=='left') xStart = margin;
-    else xStart = canvas.width/2;
+    else xStart = CANVAS.width/2;
     return xStart;
+}
+
+/* set text style slider values and color values
+/* to match data from sessionStorage
+*/
+function setSliderColorValues(textData) {
+    FONT_SIZE.setAttribute(
+        'value', textData['fontSize']
+        );
+    LINE_HEIGHT.setAttribute(
+        'value', textData['lineHeightFactor']
+        );
+    TOP_MARGIN.setAttribute(
+        'value', textData['topMarginFactor']
+        );
+    BOTTOM_MARGIN.setAttribute(
+        'value', textData['bottomMarginFactor']
+        );
+
+    document.getElementById('text-1-color').setAttribute(
+        'value', textData['text1Color']
+        );
+    document.getElementById('text-1-stroke-color').setAttribute(
+        'value', textData['text1StrokeColor']
+        );
+    document.getElementById('text-2-color').setAttribute(
+        'value', textData['text2Color']
+        );
+    document.getElementById('text-2-stroke-color').setAttribute(
+        'value', textData['text2StrokeColor']
+        );
 }
 
 /* set text stroke checkboxes 

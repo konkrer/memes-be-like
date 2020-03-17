@@ -46,32 +46,7 @@ function setFromSessionStorageTextStyles(textData) {
         }
     }
     if (textData) {
-        document.getElementById('font-size').setAttribute(
-            'value', textData['fontSize']
-            );
-        document.getElementById('line-height').setAttribute(
-            'value', textData['lineHeightFactor']
-            );
-        document.getElementById('text1-margin').setAttribute(
-            'value', textData['topMarginFactor']
-            );
-        document.getElementById('text2-margin').setAttribute(
-            'value', textData['bottomMarginFactor']
-            );
-
-        document.getElementById('text-1-color').setAttribute(
-            'value', textData['text1Color']
-            );
-        document.getElementById('text-1-stroke-color').setAttribute(
-            'value', textData['text1StrokeColor']
-            );
-        document.getElementById('text-2-color').setAttribute(
-            'value', textData['text2Color']
-            );
-        document.getElementById('text-2-stroke-color').setAttribute(
-            'value', textData['text2StrokeColor']
-            );
-        
+        setSliderColorValues(textData);  
         setTextStroke(textData);
         setTextAlignment(textData);       
     }
@@ -147,14 +122,14 @@ function hexToRgbA(hex, opacity){
 
 // from S.O. just extra stuff to look at for learning
 
-// canvas.onclick = function(e) {
+// CANVAS.onclick = function(e) {
     
 //     var x = e.offsetX;
 //     var y = e.offsetY;
 //     console.log(y)
-//     ctx.beginPath();
-//     ctx.fillStyle = 'black';
-//     ctx.arc(x, y, 15, 1, Math.PI * 2);
-//     ctx.fill();
-//     console.log('in canvas')
+//     CTX.beginPath();
+//     CTX.fillStyle = 'black';
+//     CTX.arc(x, y, 15, 1, Math.PI * 2);
+//     CTX.fill();
+//     console.log('in CANVAS')
 //   };

@@ -61,9 +61,9 @@ function paintImage() {
         let sWidth = IMAGE.width - sx - Math.round(RIGHT_CROP * IMAGE.width);
         let sHeight = IMAGE.height - sy - Math.round(BOTTOM_CROP * IMAGE.height);
 
-        canvas.width = sWidth * CURR_CANVAS_BASE_SIZE[0] * SCALE_FACTORS[0];
-        canvas.height = sHeight * CURR_CANVAS_BASE_SIZE[1] * SCALE_FACTORS[1];
-        ctx.drawImage(IMAGE, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
+        CANVAS.width = sWidth * CURR_CANVAS_BASE_SIZE[0] * SCALE_FACTORS[0];
+        CANVAS.height = sHeight * CURR_CANVAS_BASE_SIZE[1] * SCALE_FACTORS[1];
+        CTX.drawImage(IMAGE, sx, sy, sWidth, sHeight, 0, 0, CANVAS.width, CANVAS.height);
 
         changeOverlayFilter();
         changeOverlayText();
@@ -76,8 +76,8 @@ function changeborder() {
     const imageBorder = document.getElementById('border').checked;
     if (imageBorder) {
         const color = document.getElementById('border-color').value;
-        ctx.strokeStyle = color;
-        ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        CTX.strokeStyle = color;
+        CTX.strokeRect(0, 0, CANVAS.width, CANVAS.height);
     }
     localStorage.setItem('imageBorder', imageBorder);
 }
@@ -85,7 +85,7 @@ function changeborder() {
 
 // display image size in scale output area
 function showImageSize() {
-    const width = canvas.width, height = canvas.height;
+    const width = CANVAS.width, height = CANVAS.height;
     document.getElementById(
         'current-size'
         ).innerText = `${Math.round(width)} X ${Math.round(height)}`;
@@ -269,8 +269,8 @@ document.querySelector('#reset-scale').addEventListener('click', (e) => {
 function changeOverlayFilter(e) {
     let color = document.querySelector('#overlay-color').value;
     let opacity = document.querySelector('#overlay-opacity').value / 100;
-    ctx.fillStyle = hexToRgbA(color, opacity);
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    CTX.fillStyle = hexToRgbA(color, opacity);
+    CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
 }
 
 
@@ -285,31 +285,31 @@ function changeOverlayText(e) {
 
     } = getTextVaribles();
 
-    ctx.font = `${fontSize}px ${font}`;
+    CTX.font = `${fontSize}px ${font}`;
    
     // text area 1
-    ctx.textAlign = textAlignTop;
-    ctx.fillStyle = text1Color;
-    ctx.strokeStyle = text1StrokeColor.value;
+    CTX.textAlign = textAlignTop;
+    CTX.fillStyle = text1Color;
+    CTX.strokeStyle = text1StrokeColor.value;
 
     let offset = 0;
     textArray1.forEach(line => {
-        ctx.fillText(line, xStartTop, topMargin + .76*fontSize + offset, canvas.width);
-        if (text1Stroke) ctx.strokeText(
-            line, xStartTop, topMargin + .76*fontSize + offset, canvas.width
+        CTX.fillText(line, xStartTop, topMargin + .76*fontSize + offset, CANVAS.width);
+        if (text1Stroke) CTX.strokeText(
+            line, xStartTop, topMargin + .76*fontSize + offset, CANVAS.width
             );
         offset += lineHeight;
     })
 
     // text area 2 
-    ctx.textAlign = textAlignBottom;
-    ctx.fillStyle = text2Color;
-    ctx.strokeStyle = text2StrokeColor.value;
+    CTX.textAlign = textAlignBottom;
+    CTX.fillStyle = text2Color;
+    CTX.strokeStyle = text2StrokeColor.value;
 
     textArray2.forEach(line => {
-        ctx.fillText(line, xStartBotm, canvas.height - bOffset, canvas.width);
-        if (text2Stroke) ctx.strokeText(
-            line, xStartBotm, canvas.height - bOffset, canvas.width
+        CTX.fillText(line, xStartBotm, CANVAS.height - bOffset, CANVAS.width);
+        if (text2Stroke) CTX.strokeText(
+            line, xStartBotm, CANVAS.height - bOffset, CANVAS.width
             );
         bOffset -= lineHeight;
     })
@@ -334,7 +334,7 @@ function saveMeme(e) {
 
     const newImage = new Image();
     newImage.classList.add('gallery-item');
-    newImage.src = canvas.toDataURL('image/png');
+    newImage.src = CANVAS.toDataURL('image/png');
     newImage.onload = () => {
         newImage.width = newImage.width * OUTPUT_SCALE;
         newImage.height = newImage.height * OUTPUT_SCALE;

@@ -16,11 +16,11 @@ window.addEventListener('load', () => {
 
 // animate canvas when meme is saved
 function animateCanvasSave() {
-    canvas.classList.toggle('fliped');
+    CANVAS.classList.toggle('fliped');
     setTimeout(() => {
-        canvas.classList.toggle('skew');
+        CANVAS.classList.toggle('skew');
         setTimeout(() => {
-            canvas.classList.toggle('skew');
+            CANVAS.classList.toggle('skew');
         }, 1300);
     }, 1500);
 }

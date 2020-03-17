@@ -1,15 +1,15 @@
 'use strict'
 
 
-const fileUploadLocal = document.querySelector('#image-upload-local');
-const fileUploadForm = document.querySelector('#upload-form');
-let canvas = document.querySelector('canvas');
-let ctx = canvas.getContext("2d");
+const FILE_UPLOAD_LOCAL = document.querySelector('#image-upload-local');
+const FILE_UPLOAD_FORM = document.querySelector('#upload-form');
+let CANVAS = document.querySelector('canvas');
+let CTX = CANVAS.getContext("2d");
 
 // file upload  event listeners
 // on local and web file input read data and load image to canvas
-fileUploadLocal.onchange = readImage;
-fileUploadForm.addEventListener('submit', webUpload);
+FILE_UPLOAD_LOCAL.onchange = readImage;
+FILE_UPLOAD_FORM.addEventListener('submit', webUpload);
 document.querySelector('#upload-form button').addEventListener('dblclick', resetDomToDefault);
 
 
@@ -26,8 +26,8 @@ function readImage() {
             img.src = e.target.result;
            
             img.onload = function() {
-                canvas.width = img.naturalWidth;
-                canvas.height = img.naturalHeight;
+                CANVAS.width = img.naturalWidth;
+                CANVAS.height = img.naturalHeight;
                 IMAGE = img;
                 paintImage();
                 document.querySelector("#image-upload-web").value = "";
@@ -52,11 +52,11 @@ function webUpload(e, link) {
     const img = new Image();
     toDataURL(webLink, (dataUrl) => img.src = dataUrl);
     img.onload = () => {
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
+        CANVAS.width = img.naturalWidth;
+        CANVAS.height = img.naturalHeight;
         IMAGE = img;
         paintImage();
-        fileUploadLocal.value = "";
+        FILE_UPLOAD_LOCAL.value = "";
     }
 }
 
