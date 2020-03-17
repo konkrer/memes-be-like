@@ -14,6 +14,47 @@ window.addEventListener('load', () => {
 
 })
 
+// put each letter of header h1 
+// in own div with class grow
+function animateHeaderPutLettersInDivs() {
+    const headerH1 = document.querySelector('header h1');
+    const innerText = headerH1.innerText;
+    headerH1.innerText = '';
+    innerText.split('').forEach(lett => {
+        const lettDiv = document.createElement('div');
+        lettDiv.classList.add('grow');
+        if (lett===' ') {
+            lett = '_';
+            lettDiv.classList.add('hidden');
+        }
+        lettDiv.innerText = lett;
+
+        headerH1.append(lettDiv);
+    })
+}
+
+// put each letter of header h1 
+// in own div with class grow
+function animateHeaderPutWordssInDivs() {
+    const headerH1 = document.querySelector('header h1');
+    const innerText = headerH1.innerText.split(' ');
+    headerH1.innerText = '';
+    innerText.forEach((word, i) => {
+
+        const wordDiv = document.createElement('div');
+        wordDiv.classList.add('grow');
+        wordDiv.innerText = word;
+        headerH1.append(wordDiv);
+
+        if (i < innerText.length-1) {
+            const spaceDiv = document.createElement('div');
+            spaceDiv.innerText = '_';
+            spaceDiv.classList.add('hidden');
+            headerH1.append(spaceDiv);
+        }
+    })
+}
+
 // animate canvas when meme is saved
 function animateCanvasSave() {
     CANVAS.classList.toggle('fliped');
@@ -38,6 +79,15 @@ function removeDefaultText() {
     document.getElementById('overlay-text-1').innerText = '';
     document.getElementById('overlay-text-2').innerText = '';
 }
+
+
+/*  
+/*  
+/*  
+/*  
+*/  
+animateHeaderPutWordssInDivs();
+
 
 /*  check for local data.
 /*  as this is the last script to run,
