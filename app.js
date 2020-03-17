@@ -3,26 +3,26 @@
 
 
 // editing data variables
-let image, topCrop = 0, bottomCrop = 0, leftCrop = 0, rightCrop = 0;
-let currCanvasSizeBase = [1, 1];
-let scaleFactors = [1, 1];
-let outputScale = 1;
+let IMAGE, TOP_CROP = 0, BOTTOM_CROP = 0, LEFT_CROP = 0, RIGHT_CROP = 0;
+let CURR_CANVAS_BASE_SIZE = [1, 1];
+let SCALE_FACTORS = [1, 1];
+let OUTPUT_SCALE = 1;
 
 
 // edit control variables
-const editForm = document.querySelector('#edit-form')
-const textAreas = document.querySelector('#overlay-text');
-const mousewheelevt = (/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
+const EDIT_FORM = document.querySelector('#edit-form')
+const TEXT_AREAS = document.querySelector('#overlay-text');
+const MOUSE_WHEEL_EVT = (/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
 
 
 // editing event listeners
-editForm.addEventListener(mousewheelevt, mouseAdjust);
-editForm.addEventListener('submit', (e) => e.preventDefault());
+EDIT_FORM.addEventListener(MOUSE_WHEEL_EVT, mouseAdjust);
+EDIT_FORM.addEventListener('submit', (e) => e.preventDefault());
 document.querySelector('#zoom-img').addEventListener('click', zoomImg);
-textAreas.addEventListener('keyup', paintImage);
-textAreas.addEventListener('change', paintImage);
-document.querySelector('#filter-form').addEventListener('change', paintImage);
+TEXT_AREAS.addEventListener('keyup', paintImage);
+TEXT_AREAS.addEventListener('change', paintImage);
 document.querySelector('#advanced-vis-control').addEventListener('click', toggleAdvanced);
+document.querySelector('#filter-form').addEventListener('change', paintImage);
 document.querySelector('#crop-form').addEventListener('change', cropImg);
 document.querySelector('#scale-form').addEventListener('change', scaleImg);
 document.getElementById('output-scale').addEventListener('change', changeOutputScaleValue);
@@ -32,18 +32,10 @@ document.getElementById('output-scale').addEventListener('change', changeOutputS
 document.querySelector('header button').addEventListener('click', startInit);
 
 // zoom main event listener
-document.querySelector('#canvas-wrapper').addEventListener(mousewheelevt, zoomMain);
+document.querySelector('#canvas-wrapper').addEventListener(MOUSE_WHEEL_EVT, zoomMain);
 
 // Save meme event listener
 document.querySelector('#save-btn button').addEventListener('click', saveMeme);
-
-// Fade in
-setTimeout(() => {
-    const header = document.querySelector('header');
-    header.classList.remove('hidden');
-    header.style.transform = 'none';
-    insertDefaultImage();
-}, 200);
 
 
 // start button function -
@@ -62,16 +54,16 @@ function startInit(e) {
 
 // main paint to canvas function
 function paintImage() {
-    if (!image) return;
+    if (!IMAGE) return;
 
-        let sx = Math.round(leftCrop * image.width);
-        let sy = Math.round(topCrop * image.height);
-        let sWidth = image.width - sx - Math.round(rightCrop * image.width);
-        let sHeight = image.height - sy - Math.round(bottomCrop * image.height);
+        let sx = Math.round(LEFT_CROP * IMAGE.width);
+        let sy = Math.round(TOP_CROP * IMAGE.height);
+        let sWidth = IMAGE.width - sx - Math.round(RIGHT_CROP * IMAGE.width);
+        let sHeight = IMAGE.height - sy - Math.round(BOTTOM_CROP * IMAGE.height);
 
-        canvas.width = sWidth * currCanvasSizeBase[0] * scaleFactors[0];
-        canvas.height = sHeight * currCanvasSizeBase[1] * scaleFactors[1];
-        ctx.drawImage(image, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
+        canvas.width = sWidth * CURR_CANVAS_BASE_SIZE[0] * SCALE_FACTORS[0];
+        canvas.height = sHeight * CURR_CANVAS_BASE_SIZE[1] * SCALE_FACTORS[1];
+        ctx.drawImage(IMAGE, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
 
         changeOverlayFilter();
         changeOverlayText();
@@ -99,7 +91,7 @@ function showImageSize() {
         ).innerText = `${Math.round(width)} X ${Math.round(height)}`;
     document.getElementById(
         'output-size'
-        ).innerText = `${Math.round(width * outputScale)} X ${Math.round(height * outputScale)}`;
+        ).innerText = `${Math.round(width * OUTPUT_SCALE)} X ${Math.round(height * OUTPUT_SCALE)}`;
 }
 
 
@@ -189,12 +181,12 @@ function zoomImg(e) {
     const id = e.target.id;
     switch(id) {
         case 'zoom-in':
-            currCanvasSizeBase[0] += 0.05;
-            currCanvasSizeBase[1] += 0.05;
+            CURR_CANVAS_BASE_SIZE[0] += 0.05;
+            CURR_CANVAS_BASE_SIZE[1] += 0.05;
             break;
         case 'zoom-out':
-            currCanvasSizeBase[0] -= 0.05;
-            currCanvasSizeBase[1] -= 0.05;
+            CURR_CANVAS_BASE_SIZE[0] -= 0.05;
+            CURR_CANVAS_BASE_SIZE[1] -= 0.05;
             break;
         default: 
             console.error('bad zoom switch flag')
@@ -216,16 +208,16 @@ function cropImg(e) {
     const id = e.target.id;
     switch (id) {
         case 'crop-top':
-            topCrop = (e.target.value / 100).toFixed(2);
+            TOP_CROP = (e.target.value / 100).toFixed(2);
             break;
         case 'crop-bottom':
-            bottomCrop = (e.target.value / 100).toFixed(2);
+            BOTTOM_CROP = (e.target.value / 100).toFixed(2);
             break;
         case 'crop-left':
-            leftCrop = (e.target.value / 100).toFixed(2);
+            LEFT_CROP = (e.target.value / 100).toFixed(2);
             break;
         case 'crop-right':
-            rightCrop = (e.target.value / 100).toFixed(2);
+            RIGHT_CROP = (e.target.value / 100).toFixed(2);
             break;
         default: 
             console.error('bad crop switch flag')
@@ -237,7 +229,7 @@ function cropImg(e) {
 // Crop Reset
 document.querySelector('#reset-crop').addEventListener('click', (e) => {
     e.preventDefault();
-    topCrop = 0, bottomCrop = 0, leftCrop = 0, rightCrop = 0;
+    TOP_CROP = 0, BOTTOM_CROP = 0, LEFT_CROP = 0, RIGHT_CROP = 0;
     document.querySelector('#crop-top').value = 0, 
     document.querySelector('#crop-bottom').value = 0, 
     document.querySelector('#crop-left').value = 0, 
@@ -250,10 +242,10 @@ function scaleImg(e) {
     const id = e.target.id;
     switch(id) {
         case 'scale-x':
-            scaleFactors[0] = (e.target.value / 100).toFixed(2);
+            SCALE_FACTORS[0] = (e.target.value / 100).toFixed(2);
             break;
         case 'scale-y':
-            scaleFactors[1] = (e.target.value / 100).toFixed(2);
+            SCALE_FACTORS[1] = (e.target.value / 100).toFixed(2);
             break;
         default: 
             console.error('bad scale switch flag')
@@ -267,8 +259,8 @@ document.querySelector('#reset-scale').addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelector('#scale-x').value = 100;
     document.querySelector('#scale-y').value = 100;
-    scaleFactors[0] = 1;
-    scaleFactors[1] = 1;
+    SCALE_FACTORS[0] = 1;
+    SCALE_FACTORS[1] = 1;
     paintImage();
 });
 
@@ -331,7 +323,7 @@ function changeOutputScaleValue(e) {
     else if (outScaleValue < 0.1) outScaleValue = 0.1;
     outScaleValue = (Math.round(outScaleValue * 100 + Number.EPSILON) / 100) 
     document.getElementById('output-scale').value = outScaleValue;
-    outputScale = outScaleValue;
+    OUTPUT_SCALE = outScaleValue;
     showImageSize();
 }
 
@@ -344,8 +336,8 @@ function saveMeme(e) {
     newImage.classList.add('gallery-item');
     newImage.src = canvas.toDataURL('image/png');
     newImage.onload = () => {
-        newImage.width = newImage.width * outputScale;
-        newImage.height = newImage.height * outputScale;
+        newImage.width = newImage.width * OUTPUT_SCALE;
+        newImage.height = newImage.height * OUTPUT_SCALE;
         gallery.lastElementChild.prepend(newImage, createDeleteBtn());
         // don't actually NEED to do this each time
         gallery.classList.remove('display-none');
@@ -353,55 +345,3 @@ function saveMeme(e) {
     }
     animateCanvasSave();
 }
-
-
-//reset all edit control sliders and values
-function resetAllEditControlsValues() {
-    document.querySelector('#edit-form').reset(); 
-    topCrop = 0, bottomCrop = 0, leftCrop = 0, rightCrop = 0;
-    resetImgScale();
-}
-
-
-// reset zoom and scale base factors
-function resetImgScale() {
-    currCanvasSizeBase = [1, 1];
-    scaleFactors = [1, 1];
-}
-
-
-// insert default image
-function insertDefaultImage() {
-    const URL = "https://3.bp.blogspot.com/_57XeKo2AVGk/TNfvV8CmamI/AAAAAAAADds/zG9SGr3Dv9s/s1600/The_Riddler_3%5B1%5D.png"
-    webUpload({preventDefault: () => {}}, URL);   
-}
-
-
-// helper function from S.O. https://stackoverflow.com/a/21648508/11164558
-function hexToRgbA(hex, opacity){
-    var c;
-    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-        c= hex.substring(1).split('');
-        if(c.length== 3){
-            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c= '0x'+c.join('');
-        return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+ `, ${opacity})`;
-    }
-    throw new Error('Bad Hex');
-}
-
-
-// from S.O. just extra stuff to look at for learning
-
-// canvas.onclick = function(e) {
-    
-//     var x = e.offsetX;
-//     var y = e.offsetY;
-//     console.log(y)
-//     ctx.beginPath();
-//     ctx.fillStyle = 'black';
-//     ctx.arc(x, y, 15, 1, Math.PI * 2);
-//     ctx.fill();
-//     console.log('in canvas')
-//   };

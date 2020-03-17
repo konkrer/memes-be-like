@@ -1,85 +1,15 @@
 'use strict'
 
 
-document.querySelector('#default-font').addEventListener('click', setDefaultFont);
-document.querySelector('#set-style').addEventListener('click', setTextStyle);
 
-
-
-function getTextVaribles() {  
-    // get values from index.html(#overlay-text) for canvas text overlay
-    // and calculate additional values as necessarry.
-    const fontSize = document.getElementById('font-size').value;
-    const lineHeightFactor = document.getElementById('line-height').value;
-    const lineHeight = (lineHeightFactor / 100) * +fontSize;
-  
-    const topMarginFactor = document.getElementById('text1-margin').value;
-    const bottomMarginFactor = document.getElementById('text2-margin').value;
-    const topMargin = lineHeight * (topMarginFactor / 100);
-    const bottomMargin = lineHeight * (bottomMarginFactor / 100);
-
-    const font = document.getElementById('font-select').value;
-    const textAlignTop = document.getElementById('text1-align').value;
-    const textAlignBottom = document.getElementById('text2-align').value;
-
-    // calculate x axis start values for text alignment choices
-    const xStartTop = getXStart(textAlignTop, topMargin);
-    const xStartBotm = getXStart(textAlignBottom, bottomMargin);
-
-    let [textArray1, textArray2] = getTextArrays();
-
-    // bottom offset. offset bottom text upwards so additonal lines 
-    // of  text appear below the previous lines
-    let bOffset = (textArray2.length - 1) * lineHeight + bottomMargin;
-
-    const text1Color = document.querySelector('#text-1-color').value;
-    const text1StrokeColor = document.querySelector('#text-1-stroke-color');
-    const text1Stroke = text1StrokeColor.nextElementSibling.checked;
-
-    const text2Color = document.querySelector('#text-2-color').value;
-    const text2StrokeColor = document.querySelector('#text-2-stroke-color');
-    const text2Stroke = text2StrokeColor.nextElementSibling.checked;
-
-    setSessionStorageText(
-        fontSize, lineHeightFactor, topMarginFactor, 
-        bottomMarginFactor, textAlignTop, textAlignBottom, 
-        text1Color, text1StrokeColor, text1Stroke,
-        text2Color, text2StrokeColor, text2Stroke,
-        );
-
-    setLocalStorageText(font, text1Stroke, text2Stroke);
-
-    return {
-        font, fontSize, lineHeight, topMargin, 
-        textAlignTop, textAlignBottom, xStartTop, 
-        xStartBotm, textArray1, textArray2, bOffset,
-        text1Color, text1StrokeColor, text1Stroke,
-        text2Color, text2StrokeColor, text2Stroke,
-    };
-}
-
+// store font and stroke prefrences into local storage
 function setLocalStorageText(font, text1Stroke, text2Stroke) {
     localStorage.setItem('font', font);
     localStorage.setItem('text1Stroke', text1Stroke);
     localStorage.setItem('text2Stroke', text2Stroke);
 }
 
-function getTextArrays() {
-    let text1 = document.querySelector('#overlay-text-1').value;
-    text1 = text1.split('\n');
-    let text2 = document.querySelector('#overlay-text-2').value;
-    text2 = text2.split('\n');
-    return [text1, text2];  
-}
-
-function getXStart(textAlign, margin) {
-    let xStart;
-    if (textAlign=='right') xStart = canvas.width - margin - 10;
-    else if (textAlign=='left') xStart = margin;
-    else xStart = canvas.width/2;
-    return xStart;
-}
-
+// store text style JSON into sessionStorage
 function setSessionStorageText(
     fontSize, lineHeightFactor, topMarginFactor, 
     bottomMarginFactor, textAlignTop, textAlignBottom, 
@@ -104,15 +34,9 @@ function setSessionStorageText(
         sessionStorage.setItem('textData', textData);
 }
 
-// save current text style to html values for defaults for form reset
-// current style is already in sessionStorage
-function setTextStyle(e) {
-    e.preventDefault();
-    setFromSessionStorageTextStyles();
-}
 
-// load text style defaults from localStorage
-// set html defaults
+// load text style prefrences from sessionStorage to DOM
+// if data passed in use that data to set DOM values
 function setFromSessionStorageTextStyles(textData) {
     // if no textData has been passed in (for reseting form to original values)
     if (!textData) {
@@ -149,23 +73,7 @@ function setFromSessionStorageTextStyles(textData) {
             );
         
         setTextStroke(textData);
-
-
-        // unselect all then select desired text alignment option
-        document.querySelectorAll(`#text-form-1 option`).forEach(option => {
-            option.removeAttribute('selected');
-        });
-        document.querySelector(
-            `#text-form-1 option[value=${textData['textAlignTop']}]`
-            ).setAttribute('selected', true);
-
-        // unselect all then select desired text alignment option
-        document.querySelectorAll(`#text-form-2 option`).forEach(option => {
-            option.removeAttribute('selected');
-        });
-        document.querySelector(
-            `#text-form-2 option[value=${textData['textAlignBottom']}]`
-            ).setAttribute('selected', true);     
+        setTextAlignment(textData);       
     }
 }
 
@@ -174,7 +82,7 @@ function setFromSessionStorageTextStyles(textData) {
 function loadFromLocalStorage() {
     if (localStorage.getItem('font')) {
 
-        selectFontHtml();
+        selectFontDom();
 
         if (localStorage.getItem('text1Stroke')==='false') {
             document.getElementById('text-1-outline').removeAttribute('checked');
@@ -188,43 +96,28 @@ function loadFromLocalStorage() {
     }
 }
 
-
-function setTextStroke(textData) {
-
-    if (textData['text1Stroke']) {
-        document.getElementById('text-1-outline').setAttribute(
-            'checked', true
-            );
-    }else document.getElementById('text-1-outline').removeAttribute('checked');
-
-    if (textData['text2Stroke']) {
-        document.getElementById('text-2-outline').setAttribute(
-            'checked', true
-            );
-    }else document.getElementById('text-2-outline').removeAttribute('checked');
-}
-
-
-// deselect then select the proper font option by calling selectFontHtml
-function setDefaultFont(e) {
+// reset DOM text style values to original html coded values
+function resetDomToDefault(e) {
     e.preventDefault();
-    selectFontHtml();
+
+    setFromSessionStorageTextStyles(TEXT_DEFAULTS);
+    sessionStorage.setItem('textData', JSON.stringify(TEXT_DEFAULTS));
 }
 
-// set html font option to selected to equal data in localStorage. 
-// deselect all then select the desired font
-function selectFontHtml() {
-    const font = localStorage.getItem('font');
-
-    document.querySelectorAll(`#font-select option`).forEach(option => {
-        option.removeAttribute('selected');
-    });
-    document.querySelector(
-        `#font-select option[value="${font}"]`
-        ).setAttribute('selected', true);
+//reset all edit control sliders and values
+function resetAllEditControlsValues() {
+    document.querySelector('#edit-form').reset(); 
+    TOP_CROP = 0, BOTTOM_CROP = 0, LEFT_CROP = 0, RIGHT_CROP = 0;
+    resetImgScale();
 }
 
-// factory function for remove button
+// reset zoom and scale base factors
+function resetImgScale() {
+    CURR_CANVAS_BASE_SIZE = [1, 1];
+    SCALE_FACTORS = [1, 1];
+}
+
+// factory function for remove button in gallery
 function createDeleteBtn() {
     const btn = document.createElement('button');
     btn.innerText = 'Remove this meme';
@@ -235,46 +128,33 @@ function createDeleteBtn() {
     return btn;
 }
 
-function removeDefaultText() {
-    document.getElementById('overlay-text-1').innerText = '';
-    document.getElementById('overlay-text-2').innerText = '';
-}
-
-// reset html form values to original html coded values
-function resetFormToDefault(e) {
-    e.preventDefault();
-    console.log(e)
-    let textData = {
-            'fontSize': '60',
-            'lineHeightFactor': '100',
-            'topMarginFactor': '30',
-            'bottomMarginFactor': '30',
-            'textAlignTop': 'center',
-            'textAlignBottom': 'center',
-            'text1Color': '#000000',
-            'text1StrokeColor': '#FFFFFF',
-            'text2Color': '#000000',
-            'text2StrokeColor': '#FFFFFF',
-            'text1Stroke': 'true',
-            'text2Stroke': 'true',
+// helper function from S.O. https://stackoverflow.com/a/21648508/11164558
+function hexToRgbA(hex, opacity){
+    var c;
+    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+        c= hex.substring(1).split('');
+        if(c.length== 3){
+            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c= '0x'+c.join('');
+        return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+ `, ${opacity})`;
     }
-    setFromSessionStorageTextStyles(textData);
-    textData = JSON.stringify(textData);
-    sessionStorage.setItem('textData', textData);
+    throw new Error('Bad Hex');
 }
 
 
-// animate canvas when meme is saved
-function animateCanvasSave() {
-    canvas.classList.toggle('fliped');
-    setTimeout(() => {
-        canvas.classList.toggle('skew');
-        setTimeout(() => {
-            canvas.classList.toggle('skew');
-        }, 1300);
-    }, 1500);
-}
 
 
-setFromSessionStorageTextStyles();
-loadFromLocalStorage();
+// from S.O. just extra stuff to look at for learning
+
+// canvas.onclick = function(e) {
+    
+//     var x = e.offsetX;
+//     var y = e.offsetY;
+//     console.log(y)
+//     ctx.beginPath();
+//     ctx.fillStyle = 'black';
+//     ctx.arc(x, y, 15, 1, Math.PI * 2);
+//     ctx.fill();
+//     console.log('in canvas')
+//   };

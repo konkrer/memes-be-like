@@ -10,7 +10,7 @@ let ctx = canvas.getContext("2d");
 // on local and web file input read data and load image to canvas
 fileUploadLocal.onchange = readImage;
 fileUploadForm.addEventListener('submit', webUpload);
-document.querySelector('#upload-form button').addEventListener('dblclick', resetFormToDefault);
+document.querySelector('#upload-form button').addEventListener('dblclick', resetDomToDefault);
 
 
 // this function copied from Stack Overflow for the most part
@@ -28,7 +28,7 @@ function readImage() {
             img.onload = function() {
                 canvas.width = img.naturalWidth;
                 canvas.height = img.naturalHeight;
-                image = img;
+                IMAGE = img;
                 paintImage();
                 document.querySelector("#image-upload-web").value = "";
             };
@@ -54,7 +54,7 @@ function webUpload(e, link) {
     img.onload = () => {
         canvas.width = img.naturalWidth;
         canvas.height = img.naturalHeight;
-        image = img;
+        IMAGE = img;
         paintImage();
         fileUploadLocal.value = "";
     }
