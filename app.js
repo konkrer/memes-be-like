@@ -4,7 +4,7 @@
 
 // editing data variables
 let IMAGE, TOP_CROP = 0, BOTTOM_CROP = 0, LEFT_CROP = 0, RIGHT_CROP = 0;
-let CURR_CANVAS_BASE_SIZE = [1, 1];
+let CURR_CANVAS_BASE_SIZE = 1;
 let SCALE_FACTORS = [1, 1];
 let OUTPUT_SCALE = 1;
 
@@ -16,15 +16,15 @@ const MOUSE_WHEEL_EVT = (/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll"
 
 
 // editing event listeners
-EDIT_FORM.addEventListener(MOUSE_WHEEL_EVT, mouseAdjust);
+EDIT_FORM.addEventListener(MOUSE_WHEEL_EVT, mouseAdjust, {passive: false, capture: true});
 EDIT_FORM.addEventListener('submit', (e) => e.preventDefault());
-document.querySelector('#zoom-img').addEventListener('click', zoomImg);
 TEXT_AREAS.addEventListener('keyup', paintImage);
 TEXT_AREAS.addEventListener('change', paintImage);
-document.querySelector('#advanced-vis-control').addEventListener('click', toggleAdvanced);
-document.querySelector('#filter-form').addEventListener('change', paintImage);
-document.querySelector('#crop-form').addEventListener('change', cropImg);
-document.querySelector('#scale-form').addEventListener('change', scaleImg);
+document.getElementById('zoom-img').addEventListener('click', zoomImg);
+document.getElementById('advanced-vis-control').addEventListener('click', toggleAdvanced);
+document.getElementById('filter-form').addEventListener('change', paintImage);
+document.getElementById('crop-form').addEventListener('change', cropImg);
+document.getElementById('scale-form').addEventListener('change', scaleImg);
 document.getElementById('output-scale').addEventListener('change', changeOutputScaleValue);
 
 
@@ -32,7 +32,9 @@ document.getElementById('output-scale').addEventListener('change', changeOutputS
 document.querySelector('header button').addEventListener('click', startInit);
 
 // zoom main event listener
-document.querySelector('#canvas-wrapper').addEventListener(MOUSE_WHEEL_EVT, zoomMain);
+document.querySelector(
+    '#canvas-wrapper'
+    ).addEventListener(MOUSE_WHEEL_EVT, zoomMain, {passive: false, capture: true});
 
 // Save meme event listener
 document.querySelector('#save-btn button').addEventListener('click', saveMeme);
@@ -61,8 +63,8 @@ function paintImage() {
         let sWidth = IMAGE.width - sx - Math.round(RIGHT_CROP * IMAGE.width);
         let sHeight = IMAGE.height - sy - Math.round(BOTTOM_CROP * IMAGE.height);
 
-        CANVAS.width = sWidth * CURR_CANVAS_BASE_SIZE[0] * SCALE_FACTORS[0];
-        CANVAS.height = sHeight * CURR_CANVAS_BASE_SIZE[1] * SCALE_FACTORS[1];
+        CANVAS.width = sWidth * CURR_CANVAS_BASE_SIZE * SCALE_FACTORS[0];
+        CANVAS.height = sHeight * CURR_CANVAS_BASE_SIZE * SCALE_FACTORS[1];
         CTX.drawImage(IMAGE, sx, sy, sWidth, sHeight, 0, 0, CANVAS.width, CANVAS.height);
 
         changeOverlayFilter();
@@ -176,17 +178,16 @@ function mouseChangeSliderValue(e) {
     return e;
 }
 
-
+// ZOOM in or out by adjusting CURR_CANVAS_BASE_SIZE
+// scaling factor that influence canvas size
 function zoomImg(e) {
     const id = e.target.id;
     switch(id) {
         case 'zoom-in':
-            CURR_CANVAS_BASE_SIZE[0] += 0.05;
-            CURR_CANVAS_BASE_SIZE[1] += 0.05;
+            CURR_CANVAS_BASE_SIZE += 0.05;
             break;
         case 'zoom-out':
-            CURR_CANVAS_BASE_SIZE[0] -= 0.05;
-            CURR_CANVAS_BASE_SIZE[1] -= 0.05;
+            CURR_CANVAS_BASE_SIZE -= 0.05;
             break;
         default: 
             console.error('bad zoom switch flag')
@@ -195,7 +196,8 @@ function zoomImg(e) {
     paintImage();
 }
 
-
+// To toggle advanced controls.
+// i.e. overlay, crop, scale, output scale
 function toggleAdvanced(e) {
     e.preventDefault();
     document.getElementById('advanced-zone').classList.toggle('display-none');
@@ -203,7 +205,7 @@ function toggleAdvanced(e) {
     else e.target.innerText = "Show Advanced";
 }
 
-
+// crop image variables adjustment
 function cropImg(e) {
     const id = e.target.id;
     switch (id) {
@@ -237,7 +239,7 @@ document.querySelector('#reset-crop').addEventListener('click', (e) => {
     paintImage();
 });
 
-
+// scale image coefficent adjustment
 function scaleImg(e) {
     const id = e.target.id;
     switch(id) {
@@ -254,7 +256,7 @@ function scaleImg(e) {
     paintImage();
 }
 
-// Scale Reset
+// Scale Reset. reset scale coefficients
 document.querySelector('#reset-scale').addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelector('#scale-x').value = 100;
@@ -273,7 +275,7 @@ function changeOverlayFilter(e) {
     CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
 }
 
-
+// update overlay text from text-zone inputs
 function changeOverlayText(e) {
     let {
 
@@ -287,11 +289,11 @@ function changeOverlayText(e) {
 
     CTX.font = `${fontSize}px ${font}`;
    
-    // text area 1
+    // text area 1 set CTX properties
     CTX.textAlign = textAlignTop;
     CTX.fillStyle = text1Color;
     CTX.strokeStyle = text1StrokeColor.value;
-
+    // text area 1 draw text onto canvas
     let offset = 0;
     textArray1.forEach(line => {
         CTX.fillText(line, xStartTop, topMargin + .76*fontSize + offset, CANVAS.width);
@@ -301,11 +303,11 @@ function changeOverlayText(e) {
         offset += lineHeight;
     })
 
-    // text area 2 
+    // text area 2 set CTX properties
     CTX.textAlign = textAlignBottom;
     CTX.fillStyle = text2Color;
     CTX.strokeStyle = text2StrokeColor.value;
-
+    // text area 2 draw text onto canvas
     textArray2.forEach(line => {
         CTX.fillText(line, xStartBotm, CANVAS.height - bOffset, CANVAS.width);
         if (text2Stroke) CTX.strokeText(
@@ -316,14 +318,22 @@ function changeOverlayText(e) {
 }
 
 
+// set OUTPUT_SCALE and change output scale display table 
 function changeOutputScaleValue(e) {
     e.preventDefault();
     let outScaleValue = e.target.value;
-    if (outScaleValue > 3) outScaleValue = 3;
-    else if (outScaleValue < 0.1) outScaleValue = 0.1;
-    outScaleValue = (Math.round(outScaleValue * 100 + Number.EPSILON) / 100) 
+    
+    // clamp output scale and round to two decimal places
+    outScaleValue = clampRoundOutputScale(outScaleValue);
+
+    // paint DOM with clamped and rounded value
     document.getElementById('output-scale').value = outScaleValue;
+
+    // set output scale coefficient to rounded value
     OUTPUT_SCALE = outScaleValue;
+
+    // display correct input and output pixle sizes
+    // in output-scale-form table
     showImageSize();
 }
 
@@ -345,3 +355,25 @@ function saveMeme(e) {
     }
     animateCanvasSave();
 }
+
+
+/* /* /* /* /* /* /* /* /* /* /* /* /* /* /* /*
+/* alterd save meme function for img animation
+/* instead of canvas animation
+/* same problem persisted
+/*
+/*
+/* // save meme function
+/* function saveMeme(e) {
+/*    const gallery = document.querySelector('.gallery');
+/*
+/*    const newImage = new Image();
+/*    newImage.src = CANVAS.toDataURL('image/png');
+/*    newImage.onload = () => {
+/*        CANVAS_WRAPPER.prepend(newImage);
+/*        CANVAS.classList.add('display-none');
+/*        setTimeout(animateCanvasSave, 10);
+/*    }
+/*    
+/* }
+/* /* /* /* /* /* /* /* /* /* /* /* /* /* */

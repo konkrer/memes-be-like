@@ -88,8 +88,16 @@ function resetAllEditControlsValues() {
 
 // reset zoom and scale base factors
 function resetImgScale() {
-    CURR_CANVAS_BASE_SIZE = [1, 1];
+    CURR_CANVAS_BASE_SIZE = 1;
     SCALE_FACTORS = [1, 1];
+}
+
+// clamp output scale input values to desired range
+// and round to two decimal places
+function clampRoundOutputScale(outScaleValue) {
+    if (outScaleValue > 3) outScaleValue = 3;
+    else if (outScaleValue < 0.1) outScaleValue = 0.1;
+    return Math.round(outScaleValue * 100 + Number.EPSILON) / 100;
 }
 
 // factory function for remove button in gallery

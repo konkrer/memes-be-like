@@ -89,7 +89,6 @@ header button:hover {
 main {
     border: 1px solid black;
     border-radius: 0 0 10px 10px;
-    height: 90vh;
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
     grid-template-rows: 1fr 20fr;

@@ -66,6 +66,22 @@ function animateCanvasSave() {
     }, 1500);
 }
 
+/*
+/* flipping img instead of canvas for firefox didn't work
+*/
+// function animateCanvasSave() {
+//     const img = CANVAS_WRAPPER.firstElementChild;
+//     img.classList.toggle('fliped');
+//     setTimeout(() => {
+//         img.classList.toggle('transit-400');
+//         img.classList.toggle('skew');
+//         setTimeout(() => {
+//             img.classList.toggle('transit-400');
+//             img.classList.toggle('skew');
+//         }, 1300);      
+//     }, 1510);
+// }
+
 // insert default image for user to interact with right away
 function insertDefaultImage() {
     const URL = 
