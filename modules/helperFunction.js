@@ -17,18 +17,18 @@ function setSessionStorageText(
     text2Color, text2StrokeColor, text2Stroke,) {
 
         let textData = {
-            'fontSize': fontSize,
-            'lineHeightFactor': lineHeightFactor,
-            'topMarginFactor': topMarginFactor,
-            'bottomMarginFactor': bottomMarginFactor,
-            'textAlignTop': textAlignTop,
-            'textAlignBottom': textAlignBottom,
-            'text1Color': text1Color,
+            fontSize,
+            lineHeightFactor,
+            topMarginFactor,
+            bottomMarginFactor,
+            textAlignTop,
+            textAlignBottom,
+            text1Color,
             'text1StrokeColor': text1StrokeColor.value,
-            'text1Stroke': text1Stroke,
-            'text2Color': text2Color,
+            text1Stroke,
+            text2Color,
             'text2StrokeColor': text2StrokeColor.value,
-            'text2Stroke': text2Stroke,
+            text2Stroke,
         }
         textData = JSON.stringify(textData);
         sessionStorage.setItem('textData', textData);
