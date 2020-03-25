@@ -77,7 +77,7 @@ function getTextVaribles() {
         xStartBotm, textArray1, textArray2, bOffset,
         text1Color, text1StrokeColor, text1Stroke,
         text2Color, text2StrokeColor, text2Stroke,
-    };
+    }
 }
 
 /* return array of text from textareas data. 

@@ -277,46 +277,48 @@ function changeOverlayFilter(e) {
 
 // update overlay text from text-zone inputs
 function changeOverlayText(e) {
-    let {
+    let textData = getTextVaribles();
 
-        font, fontSize, lineHeight, topMargin, 
-        textAlignTop, textAlignBottom, xStartTop, 
-        xStartBotm, textArray1, textArray2, bOffset,
-        text1Color, text1StrokeColor, text1Stroke,
-        text2Color, text2StrokeColor, text2Stroke,
-
-    } = getTextVaribles();
-
-    CTX.font = `${fontSize}px ${font}`;
-   
+    CTX.font = `${textData.fontSize}px ${textData.font}`;
     // text area 1 set CTX properties
-    CTX.textAlign = textAlignTop;
-    CTX.fillStyle = text1Color;
-    CTX.strokeStyle = text1StrokeColor.value;
-    // text area 1 draw text onto canvas
-    let offset = 0;
-    textArray1.forEach(line => {
-        CTX.fillText(line, xStartTop, topMargin + .76*fontSize + offset, CANVAS.width);
-        if (text1Stroke) CTX.strokeText(
-            line, xStartTop, topMargin + .76*fontSize + offset, CANVAS.width
-            );
-        offset += lineHeight;
-    })
-
+    setCanvasTextStyle(textData.textAlignTop, textData.text1Color, textData.text1StrokeColor);
+    // add top text
+    addTopText(textData);
     // text area 2 set CTX properties
-    CTX.textAlign = textAlignBottom;
-    CTX.fillStyle = text2Color;
-    CTX.strokeStyle = text2StrokeColor.value;
-    // text area 2 draw text onto canvas
-    textArray2.forEach(line => {
-        CTX.fillText(line, xStartBotm, CANVAS.height - bOffset, CANVAS.width);
-        if (text2Stroke) CTX.strokeText(
-            line, xStartBotm, CANVAS.height - bOffset, CANVAS.width
-            );
-        bOffset -= lineHeight;
-    })
+    setCanvasTextStyle(textData.textAlignBottom, textData.text2Color, textData.text2StrokeColor);
+    // add bottom text
+    addBottomText(textData);   
 }
 
+// Set CTX text styles
+function setCanvasTextStyle(align, color, stroke) {
+    CTX.textAlign = align;
+    CTX.fillStyle = color;
+    CTX.strokeStyle = stroke.value;
+}
+
+// Draw top text on canvas.
+function addTopText(textData) {
+    let offset = 0;
+    textData.textArray1.forEach(line => {
+        CTX.fillText(line, textData.xStartTop, textData.topMargin + .76*textData.fontSize + offset, CANVAS.width);
+        if (textData.text1Stroke) CTX.strokeText(
+            line, textData.xStartTop, textData.topMargin + .76*textData.fontSize + offset, CANVAS.width
+            );
+        offset += textData.lineHeight;
+    });
+}
+
+// Draw bottom text on canvas.
+function addBottomText(textData) {
+    textData.textArray2.forEach(line => {
+        CTX.fillText(line, textData.xStartBotm, CANVAS.height - textData.bOffset, CANVAS.width);
+        if (textData.text2Stroke) CTX.strokeText(
+            line, textData.xStartBotm, CANVAS.height - textData.bOffset, CANVAS.width
+            );
+        textData.bOffset -= textData.lineHeight;
+    });
+}
 
 // set OUTPUT_SCALE and change output scale display table 
 function changeOutputScaleValue(e) {
