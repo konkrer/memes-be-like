@@ -9,4 +9,4 @@ and more. Generated memes can be downloaded to user machine by mouse menu.
 
 Double click reset button to clear saved text style.
 
-![website image of meme generator](/static/smaller1.png)
+![website image of meme generator](https://repository-images.githubusercontent.com/246771408/1bedda80-68ba-11ea-8e8c-506cc4f87f87)
